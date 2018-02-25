@@ -12,6 +12,7 @@ export default {
 
 <style>
   @import "./style/common.less";
+  @import "./style/iconfont.css";
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

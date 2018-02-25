@@ -2,11 +2,29 @@
   <div class="head_bg">
     <div class="nav">
       <ul class="nav_left">
-        <li>
+        <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="areaShow ? navHover : ''" data-key="areaShow">
           <span>中国大陆</span>
+          <div v-show="areaShow" class="menu">
+            <ul class="area_list">
+              <li v-for="item in areaList" :key="item">{{ item }}</li>
+            </ul>
+          </div>
         </li>
-        <li v-on:mouseenter="hover" v-on:mouseleave="blur">
+        <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="userShow ? navHover : ''" data-key="userShow">
           <span>遮不住的时光</span>
+          <div v-show="userShow" class="menu">
+            <div class="user_menu">
+              <div style="display: flex">
+                <img class="avatar" src="./img/avatar.jpeg"/>
+                <div class="info">
+                  <p><span style="margin-right: 10px">账号管理</span>|<span style="margin-left: 10px">退出</span></p>
+                  <p>淘气值：627</p>
+                  <p>普通会员</p>
+                </div>
+              </div>
+              <a class="privilege" href="#">查看你的专属权益</a>
+            </div>
+          </div>
         </li>
         <li><span>消息</span></li>
         <li><span>手机逛淘宝</span></li>
@@ -31,10 +49,14 @@
   .nav_left {
     display: flex;
 
-    li {
+    >li {
       line-height: 35px;
       padding: 0 6px;
       cursor: pointer;
+      position: relative;
+      border-width: 0 1px;
+      border-color: #f5f5f5;
+      border-style: solid;
 
       span:hover {
         color: #f40;
@@ -43,19 +65,88 @@
   }
   .nav_hover {
     background-color: #fff;
+    border-color: #eee !important;
+  }
+  .menu {
+    position: absolute;
+    left: -1px;
+  }
+  .area_list, .user_menu {
+    border: 1px solid #EEE;
+  }
+  .area_list {
+    padding: 8px 0;
+    >li {
+      width: 242px;
+      height: 29px;
+      line-height: 29px;
+      padding-left: 8px;
+      cursor: pointer;
+    }
+    >li:hover {
+      background-color: #f4f4f4;
+    }
+  }
+  .user_menu {
+    padding: 8px;
+    width: 266px;
+    cursor: default;
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    margin: 9px 18px;
+  }
+  .info {
+    width: 100%;
+    p {
+      height: 20px;
+      line-height: 20px;
+    }
+    p:first-child {
+      text-align: right;
+    }
+    span:hover {
+      color: #f40;
+      cursor: pointer;
+    }
+  }
+  .privilege{
+    display: block;
+    text-align: center;
+    border: 1px solid #FFE8DE;
+    background: #FFF0E8;
+    height: 28px;
+    line-height: 28px;
+    cursor: pointer;
+  }
+  .privilege:hover {
+    color: #f40;
   }
 </style>
 
 <script>
 export default {
   name: 'Header',
+  data () {
+    return {
+      areaShow: false,
+      userShow: false,
+      areaList: ['全球', '中国大陆', '香港', '台湾', '澳门', '日本'],
+      navHover: 'nav_hover'
+    }
+  },
   methods: {
     hover: function (e) {
-      e.target.className += ' nav_hover'
+      let key = e.target.getAttribute('data-key')
+      this[key] = true
     },
 
     blur: function (e) {
-      e.target.className = e.target.className.replace(/nav_hover/g, '')
+      let key = e.target.getAttribute('data-key')
+      this[key] = false
     }
   }
 }
