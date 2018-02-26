@@ -29,7 +29,24 @@
         <li><span>消息</span></li>
         <li><span>手机逛淘宝</span></li>
       </ul>
-      <ul class="nav_right"></ul>
+      <ul class="nav_right">
+        <li>
+          <span>我的淘宝</span>
+        </li>
+        <li>
+          <span>购物车</span>
+        </li>
+        <li>
+          <span>收藏夹</span>
+        </li>
+        <li>
+          <span>商品分类</span>
+        </li>
+        <li>|</li>
+        <li><span>卖家中心</span></li>
+        <li><span>联系客服</span></li>
+        <li><span>网站导航</span></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -45,13 +62,16 @@
     width: 1190px;
     height: 35px;
     font-size: 12px;
+    display: flex;
+    justify-content: space-between;
   }
-  .nav_left {
+  .nav_left, .nav_right {
     display: flex;
 
     >li {
       line-height: 35px;
       padding: 0 6px;
+      margin-right: 10px;
       cursor: pointer;
       position: relative;
       border-width: 0 1px;
@@ -137,6 +157,8 @@ export default {
       areaList: ['全球', '中国大陆', '香港', '台湾', '澳门', '日本'],
       navHover: 'nav_hover'
     }
+  },
+  mounted: function () {
   },
   methods: {
     hover: function (e) {
