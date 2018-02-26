@@ -21,7 +21,17 @@
             </div>
           </div>
         </div>
-        <div class="search_ft"></div>
+        <div class="search_ft">
+          <ul class="search_key">
+            <li v-for="item in keyList" :key="item">{{ item }}</li>
+          </ul>
+          <span>更多 ></span>
+        </div>
+      </div>
+      <div class="qrcode">
+        <p>手机淘宝</p>
+        <img src="./img/qrcode.png"/>
+        <div class="close"><i class="iconfont">&#xe6d0;</i></div>
       </div>
     </div>
   </div>
@@ -33,6 +43,7 @@
     margin: 0 auto;
     margin-top: 24px;
     display: flex;
+    position: relative;
 
     .logo {
       width: 190px;
@@ -130,6 +141,73 @@
 
     }
   }
+  .search_ft {
+    padding: 5px 0 0 0;
+    height: 20px;
+    display: flex;
+
+    .search_key {
+      height: 18px;
+      line-height: 18px;
+      margin-bottom: 5px;
+      display: flex;
+      font-size: 12px;
+      width: 589px;
+
+      li {
+        margin-right: 8px;
+        color: #666;
+        cursor: pointer;
+      }
+      li:hover {
+        color: #F40;
+      }
+    }
+    span {
+      color: #666;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    span:hover {
+      color: #F40;
+    }
+  }
+  .qrcode {
+    position: absolute;
+    top: 0;
+    right: 110px;
+    border: 1px solid #eee;
+    background-color: #FFF;
+
+    p {
+      line-height: 20px;
+      margin: 4px auto 0;
+      width: 78px;
+      font-size: 12px;
+      text-align: center;
+      color: #ff5000;
+    }
+    img {
+      width: 62px;
+      height: 62px;
+      margin-left: 6px;
+    }
+    .close {
+      position: absolute;
+      top: 0;
+      left: -15px;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      i {
+        font-size: 14px;
+        color: #DDD;
+      }
+    }
+  }
 </style>
 
 <script>
@@ -140,6 +218,7 @@ export default {
   data () {
     return {
       tab: ['宝贝', '天猫', '店铺'],
+      keyList: ['桌垫', '男运动鞋', '积木', '运动鞋', '时尚女包', '新款男鞋', '妈妈装', '双肩包', '夹克', '定制窗帘'],
       tabIndex: 0
     }
   },
