@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
   .head_bg {
     width: 100%;
     background-color: #f5f5f5;
@@ -90,6 +90,8 @@
   .menu {
     position: absolute;
     left: -1px;
+    z-index: 10;
+    background: #fff;
   }
   .area_list, .user_menu {
     border: 1px solid #EEE;

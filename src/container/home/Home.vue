@@ -28,16 +28,44 @@
           <span>更多 ></span>
         </div>
       </div>
-      <div class="qrcode">
+      <div v-show="qrcode" class="qrcode">
         <p>手机淘宝</p>
         <img src="./img/qrcode.png"/>
-        <div class="close"><i class="iconfont">&#xe6d0;</i></div>
+        <div class="close" @click="qrcodeClose">
+          <i class="iconfont">&#xe6d0;</i>
+        </div>
+      </div>
+    </div>
+    <div class="nav" v-on:mouseleave="navBlur">
+      <div class="nav_wrap">
+        <h2>主题市场</h2>
+        <ul>
+          <li v-for="(item, index) in navList" :key="item" v-on:mouseenter="navHover">
+            <span>{{ item }}</span>
+            <div class="icon" v-show="hoverIndex === index"><i class="iconfont">&#xe74a;</i></div>
+          </li>
+
+        </ul>
+        <ul>
+          <li class="pipe">|</li>
+          <li v-for="(item, index) in navList2" :key="item" v-on:mouseenter="navHover">
+            <span>{{ item }}</span>
+            <div class="icon" v-show="hoverIndex === index + 3"><i class="iconfont">&#xe74a;</i></div>
+          </li>
+        </ul>
+        <ul>
+          <li class="pipe">|</li>
+          <li v-for="(item, index) in navList3" :key="item" v-on:mouseenter="navHover">
+            <span>{{ item }}</span>
+            <div class="icon" v-show="hoverIndex === index + 8"><i class="iconfont">&#xe74a;</i></div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
   .top_wrap {
     width: 1190px;
     margin: 0 auto;
@@ -201,6 +229,7 @@
       border: 1px solid #eee;
       display: flex;
       align-items: center;
+      justify-content: center;
       cursor: pointer;
       i {
         font-size: 14px;
@@ -208,10 +237,66 @@
       }
     }
   }
+  .nav {
+    background-image: linear-gradient(to right,#ff9000 0,#ff5000 100%);
+    background-repeat: repeat-x;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 13px;
+    .nav_wrap {
+      width: 1190px;
+      margin: 0 auto;
+      display: flex;
+      font-size: 16px;
+      h2 {
+        width: 190px;
+        text-align: center;
+        font-size: 16px;
+        background: #ff5000;
+        color: #fff;
+        font-weight: bold;
+      }
+      ul {
+        display: flex;
+      }
+      li {
+        margin: 0 3px;
+        text-align: center;
+        padding: 0 4px;
+        cursor: pointer;
+        position: relative;
+        span {
+          font-weight: 700;
+          color: #fff;
+          padding: 0 5px;
+        }
+        .icon {
+          position: absolute;
+          z-index: -1;
+          left: 50%;
+          top: -18px;
+          margin-left: -15px;
+        }
+        .iconfont {
+          font-size: 30px;
+          color: #ff5000;
+        }
+      }
+      .pipe {
+        margin-left: 7px;
+        color: #fff;
+      }
+    }
+  }
 </style>
 
 <script>
+import Vue from 'vue'
 import Header from '@/components/Layout/Header'
+
+Vue.component('navIcon', {
+  template: '<div class="icon"><i class="iconfont">&#xe74a;</i></div>'
+})
 
 export default {
   name: 'Home',
@@ -219,7 +304,12 @@ export default {
     return {
       tab: ['宝贝', '天猫', '店铺'],
       keyList: ['桌垫', '男运动鞋', '积木', '运动鞋', '时尚女包', '新款男鞋', '妈妈装', '双肩包', '夹克', '定制窗帘'],
-      tabIndex: 0
+      navList: ['天猫', '聚划算', '天猫超市'],
+      navList2: ['淘抢购', '电器城', '司法拍卖', '中国质造', '兴农扶贫'],
+      navList3: ['飞猪旅行', '智能生活', '苏宁易购'],
+      tabIndex: 0,
+      qrcode: true,
+      hoverIndex: -1
     }
   },
   methods: {
@@ -227,6 +317,17 @@ export default {
       if (e.target.className.indexOf('select_tab') === -1) {
         this.tabIndex = this.tab.indexOf(e.target.innerHTML.trim())
       }
+    },
+    qrcodeClose: function () {
+      this.qrcode = false
+    },
+    navHover: function (e) {
+      let val = e.target.getElementsByTagName('span')[0].innerText.trim()
+      let list = [].concat(this.navList, this.navList2, this.navList3)
+      this.hoverIndex = list.indexOf(val)
+    },
+    navBlur: function () {
+      this.hoverIndex = -1
     }
   },
   components: {
