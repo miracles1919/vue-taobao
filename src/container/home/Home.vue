@@ -41,7 +41,7 @@
         <h2>主题市场</h2>
         <ul>
           <li v-for="(item, index) in navList" :key="item" v-on:mouseenter="navHover">
-            <span>{{ item }}</span>
+            <span style="font-size: 16px">{{ item }}</span>
             <div class="icon" v-show="hoverIndex === index"><i class="iconfont">&#xe74a;</i></div>
           </li>
 
@@ -274,6 +274,7 @@
           font-weight: 700;
           color: #fff;
           padding: 0 5px;
+          font-size: 14px;
         }
         .icon {
           position: absolute;
