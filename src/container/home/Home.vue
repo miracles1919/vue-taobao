@@ -62,6 +62,11 @@
         </ul>
       </div>
     </div>
+    <div class="main">
+      <div class="main_inner">
+        <Menu />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -288,11 +293,17 @@
       }
     }
   }
+  .main {
+    width: 1190px;
+    margin: 0 auto;
+    height: 632px;
+  }
 </style>
 
 <script>
 import Vue from 'vue'
 import Header from '@/components/Layout/Header'
+import Menu from '@/components/Home/Menu'
 
 Vue.component('navIcon', {
   template: '<div class="icon"><i class="iconfont">&#xe74a;</i></div>'
@@ -331,7 +342,8 @@ export default {
     }
   },
   components: {
-    Header
+    Header,
+    Menu
   }
 }
 </script>
