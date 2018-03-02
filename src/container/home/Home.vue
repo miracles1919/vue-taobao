@@ -65,6 +65,9 @@
     <div class="main">
       <div class="main_inner">
         <Menu />
+        <div class="core">
+          <Carousel width="520" height="280" v-bind:imgList="imgList"/>
+        </div>
       </div>
     </div>
   </div>
@@ -298,17 +301,22 @@
     width: 1190px;
     margin: 0 auto;
     height: 632px;
+    .main_inner {
+      display: flex;
+      .core {
+        margin-left: 10px;
+        margin-top: 10px;
+        height: 512px;
+        width: 520px;
+      }
+    }
   }
 </style>
 
 <script>
-import Vue from 'vue'
 import Header from '@/components/Layout/Header'
 import Menu from '@/components/Home/Menu'
-
-Vue.component('navIcon', {
-  template: '<div class="icon"><i class="iconfont">&#xe74a;</i></div>'
-})
+import Carousel from '@/components/Carousel/Carousel'
 
 export default {
   name: 'Home',
@@ -321,7 +329,12 @@ export default {
       navList3: ['飞猪旅行', '智能生活', '苏宁易购'],
       tabIndex: 0,
       qrcode: true,
-      hoverIndex: -1
+      hoverIndex: -1,
+      imgList: [
+        { url: require('./img/c1.jpg') },
+        { url: require('./img/c2.jpg') },
+        { url: require('./img/c3.jpg') }
+      ]
     }
   },
   methods: {
@@ -344,7 +357,8 @@ export default {
   },
   components: {
     Header,
-    Menu
+    Menu,
+    Carousel
   }
 }
 </script>
