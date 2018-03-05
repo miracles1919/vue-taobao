@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-on:mouseenter="hover" v-on:mouseleave="blur">
     <div v-bind:style="{ width: width + 'px', height: height + 'px' }" class="promo">
       <div v-bind:style="{ width: width * (imgList.length + 2) + 'px', transform: `translate3d(${-translate}px, 0 ,0)`, transitionDuration: translateTime + 's'}" class="promo_bd">
         <div class="banner">
@@ -13,12 +13,12 @@
           <img v-bind:src="imgList[0].url"/>
         </div>
       </div>
-      <div class="promo_opt">
+      <div class="promo_opt" v-show="optShow">
         <span class="arrow" @click="distance('prev')"><i class="iconfont">&#xe602;</i></span>
         <span class="arrow" @click="distance('next')"><i i class="iconfont">&#xe603;</i></span>
       </div>
       <ul class="promo_nav">
-        <li v-for="n in imgList.length" :key="n"><i v-bind:class="[index + 1 === n ? 'selected' : '', 'spot']"/>{{ index+1 }} {{ n }}</li>
+        <li v-for="n in imgList.length" :key="n"><i v-bind:class="[index + 1 === n ? 'selected' : '', 'spot']" @click="spot(n)"/>{{ index+1 }} {{ n }}</li>
       </ul>
     </div>
   </div>
@@ -113,7 +113,8 @@ export default {
     return {
       translate: parseInt(this.width),
       translateTime: 0.3,
-      index: 0
+      index: 0,
+      optShow: false
     }
   },
   mounted: function () {
@@ -121,7 +122,7 @@ export default {
   },
   methods: {
     init: function () {
-      setInterval(this.distance, 2000)
+      setInterval(this.distance, 3000)
     },
     distance: function (type = 'next') {
       let width = parseInt(this.width)
@@ -154,6 +155,21 @@ export default {
           this.translateTime = 0.3
         }
       }
+    },
+    spot: function (index) {
+      if (index - 1 !== this.index) {
+        let width = parseInt(this.width)
+        this.translate = width * index
+        this.translateTime = 0.3
+        this.index = index - 1
+      }
+    },
+    hover: function () {
+      console.log(333)
+      this.optShow = true
+    },
+    blur: function () {
+      this.optShow = false
     }
   }
 }
