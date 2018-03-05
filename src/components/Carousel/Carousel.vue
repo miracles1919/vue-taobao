@@ -2,14 +2,14 @@
   <div v-on:mouseenter="hover" v-on:mouseleave="blur">
     <div v-bind:style="{ width: width + 'px', height: height + 'px' }" class="promo">
       <div v-bind:style="{ width: width * (imgList.length + 2) + 'px', transform: `translate3d(${-translate}px, 0 ,0)`, transitionDuration: translateTime + 's'}" class="promo_bd">
-        <div class="banner">
+        <div class="banner" v-bind:style="{ width: width + 'px' }">
           <img v-bind:src="imgList[imgList.length - 1].url" />
         </div>
-        <div v-for="(item, index) in imgList" :key="'img' + index" class="banner">
+        <div v-for="(item, index) in imgList" :key="'img' + index" class="banner" v-bind:style="{ width: width + 'px'  }">
           <img v-bind:src="item.url" />
           <!--<div>{{translate}}</div>-->
         </div>
-        <div class="banner">
+        <div class="banner" v-bind:style="{ width: width + 'px'  }">
           <img v-bind:src="imgList[0].url"/>
         </div>
       </div>
@@ -17,7 +17,7 @@
         <span class="arrow" @click="distance('prev')"><i class="iconfont">&#xe602;</i></span>
         <span class="arrow" @click="distance('next')"><i i class="iconfont">&#xe603;</i></span>
       </div>
-      <ul class="promo_nav">
+      <ul class="promo_nav" v-if="spotShow">
         <li v-for="n in imgList.length" :key="n"><i v-bind:class="[index + 1 === n ? 'selected' : '', 'spot']" @click="spot(n)"/>{{ index+1 }} {{ n }}</li>
       </ul>
     </div>
@@ -40,6 +40,9 @@
 
     .banner {
       float: left;
+      img {
+        width: 100%;
+      }
     }
   }
   .promo_opt {
@@ -108,7 +111,7 @@
 <script>
 export default {
   name: 'Carousel',
-  props: ['width', 'height', 'imgList'],
+  props: ['width', 'height', 'imgList', 'spotShow', 'duration', 'updateIndex'],
   data () {
     return {
       translate: parseInt(this.width),
@@ -122,7 +125,7 @@ export default {
   },
   methods: {
     init: function () {
-      setInterval(this.distance, 3000)
+      setInterval(this.distance, this.duration || 3000)
     },
     distance: function (type = 'next') {
       let width = parseInt(this.width)
@@ -155,6 +158,9 @@ export default {
           this.translateTime = 0.3
         }
       }
+      if (this.updateIndex) {
+        this.updateIndex(this.index)
+      }
     },
     spot: function (index) {
       if (index - 1 !== this.index) {
@@ -165,7 +171,6 @@ export default {
       }
     },
     hover: function () {
-      console.log(333)
       this.optShow = true
     },
     blur: function () {

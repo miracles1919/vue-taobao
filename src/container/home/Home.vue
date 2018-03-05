@@ -66,7 +66,15 @@
       <div class="main_inner">
         <Menu />
         <div class="core">
-          <Carousel width="520" height="280" v-bind:imgList="imgList"/>
+          <Carousel width="520" height="280" v-bind:imgList="imgList" v-bind:spotShow="true"/>
+          <div class="tmall">
+            <div class="tmall_hd">
+              <span class="hd_bg"/>
+              <em>理想生活上天猫</em>
+              <strong><i>{{ imgIndex2 + 1 }}</i>/{{ imgList2.length }}</strong>
+            </div>
+          </div>
+          <Carousel width="520" height="200" v-bind:imgList="imgList2" duration="3500" v-bind:updateIndex="updateIndex2"/>
         </div>
       </div>
     </div>
@@ -308,6 +316,45 @@
         margin-top: 10px;
         height: 512px;
         width: 520px;
+        .tmall {
+          font-size: 14px;
+          padding-top: 11px;
+          border-bottom: 3px solid #ff1648;
+          background-color: #f1f1f1;
+          .tmall_hd {
+            height: 18px;
+            line-height: 18px;
+            position: relative;
+            .hd_bg {
+              width: 136px;
+              position: absolute;
+              height: 19px;
+              background-repeat: no-repeat;
+              background-position: 2px 0;
+              background-size: 122px 22px;
+              background-image: url("./img/tmall.png");
+            }
+            em {
+              font-size: 12px;
+              color: #666;
+              position: relative;
+              margin-left: 136px;
+              font-style: normal;
+            }
+            strong {
+              position: absolute;
+              right: 0;
+              font-family: sans-serif;
+              font-size: 12px;
+              font-weight: 400;
+
+              i {
+                font-style: normal;
+                color: #ff1648;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -334,7 +381,13 @@ export default {
         { url: require('./img/c1.jpg') },
         { url: require('./img/c2.jpg') },
         { url: require('./img/c3.jpg') }
-      ]
+      ],
+      imgList2: [
+        { url: require('./img/d1.png') },
+        { url: require('./img/d2.png') },
+        { url: require('./img/d3.png') }
+      ],
+      imgIndex2: 0
     }
   },
   methods: {
@@ -353,6 +406,9 @@ export default {
     },
     navBlur: function () {
       this.hoverIndex = -1
+    },
+    updateIndex2: function (index) {
+      this.imgIndex2 = index
     }
   },
   components: {
