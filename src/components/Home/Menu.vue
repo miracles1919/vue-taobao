@@ -30,6 +30,7 @@
     width: 190px;
     background-color: #FFF;
     position: relative;
+    height: 521px;
   }
   .service_bd {
     border: 1px solid #ff5000;

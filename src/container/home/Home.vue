@@ -62,19 +62,52 @@
         </ul>
       </div>
     </div>
-    <div class="main">
-      <div class="main_inner">
-        <Menu />
-        <div class="core">
-          <Carousel width="520" height="280" v-bind:imgList="imgList" v-bind:spotShow="true"/>
-          <div class="tmall">
-            <div class="tmall_hd">
-              <span class="hd_bg"/>
-              <em>理想生活上天猫</em>
-              <strong><i>{{ imgIndex2 + 1 }}</i>/{{ imgList2.length }}</strong>
+    <div class="bg">
+      <div class="main">
+        <div class="main_inner">
+          <Menu />
+          <div class="core">
+            <Carousel width="520" height="280" v-bind:imgList="imgList" v-bind:spotShow="true"/>
+            <div class="tmall">
+              <div class="tmall_hd">
+                <span class="hd_bg"/>
+                <em>理想生活上天猫</em>
+                <strong><i>{{ imgIndex2 + 1 }}</i>/{{ imgList2.length }}</strong>
+              </div>
+            </div>
+            <Carousel width="520" height="200" v-bind:imgList="imgList2" duration="3500" v-bind:updateIndex="updateIndex2"/>
+          </div>
+          <div class="sub_column">
+            <img src="./img/ad.jpg" />
+            <h5>今日热卖</h5>
+            <img src="./img/ad2.jpg" />
+          </div>
+        </div>
+        <div class="col_right">
+          <div class="tbh_member">
+            <div class="member">
+              <div class="member_bd">
+                <div class="avatar_wrapper">
+                  <img src="./img/avatar.jpeg"/>
+                </div>
+                <p class="nick_info">
+                  Hi!<strong>遮不住的时光</strong>
+                </p>
+                <p class="nick_info">
+                  <span><i class="tbh_icon"/>领淘金币抵钱</span>
+                  <span><i class="tbh_icon"/>会员俱乐部</span>
+                </p>
+                <div class="ft">
+                  <ul>
+                    <li><strong>0</strong>待收货</li>
+                    <li><strong>0</strong>代发货</li>
+                    <li><strong>0</strong>待付款</li>
+                    <li><strong>0</strong>待评价</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-          <Carousel width="520" height="200" v-bind:imgList="imgList2" duration="3500" v-bind:updateIndex="updateIndex2"/>
         </div>
       </div>
     </div>
@@ -305,10 +338,14 @@
       }
     }
   }
+  .bg {
+    background-color: #f4f4f4;
+  }
   .main {
     width: 1190px;
     margin: 0 auto;
     height: 632px;
+    display: flex;
     .main_inner {
       display: flex;
       .core {
@@ -351,6 +388,117 @@
               i {
                 font-style: normal;
                 color: #ff1648;
+              }
+            }
+          }
+        }
+      }
+      .sub_column {
+        width: 160px;
+        height: 512px;
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-left: 10px;
+        h5 {
+          font-size: 12px;
+          font-weight: 400;
+          background: #f1f1f1;
+          color: #a1a1a1;
+          line-height: 24px;
+        }
+      }
+    }
+    .col_right {
+      width: 290px;
+      height: 100%;
+      margin-top: 10px;
+      .tbh_member {
+        background-size: 290px 145px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-image: url("./img/userinfo_bg.png");
+        .member {
+          height: 145px;
+          padding: 3px 0 10px 0;
+          text-align: center;
+          background-repeat: no-repeat;
+          .member_bd {
+            position: relative;
+            height: 91px;
+            .avatar_wrapper {
+              margin: 0 auto;
+              img {
+                border: 3px solid #fff;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+              }
+            }
+            .nick_info {
+              line-height: 17px;
+              height: 17px;
+              font-size: 12px;
+              color: #3C3C3C;
+              strong {
+                font-weight: 400;
+              }
+              span {
+                display: inline-block;
+                border-radius: 9px;
+                background-clip: padding-box;
+                background: #ffe4db;
+                padding: 0 10px 0 20px;
+                position: relative;
+                border: none;
+                color: #ff5000;
+                cursor: pointer;
+              }
+              .tbh_icon {
+                background: url("./img/icon.png") 0 0 no-repeat;
+                background-size: 24px 597px;
+                position: absolute;
+                top: 0;
+                display: block;
+                left: 0;
+                height: 16px;
+                width: 16px;
+                vertical-align: middle;
+              }
+              span:first-child {
+                .tbh_icon {
+                  background-position: 0 -575.5px;
+                }
+              }
+              span:last-child {
+                .tbh_icon {
+                  background-position: 0 -528px;
+                }
+              }
+            }
+            .ft {
+              height: 40px;
+              margin-top: 2px;
+              padding-left: 15px;
+              ul {
+                display: flex;
+              }
+
+              li {
+                width: 66px;
+                text-align: center;
+                border-left: 1px solid #FFF;
+                color: #3C3C3C;
+                font-size: 12px;
+                cursor: pointer;
+                strong {
+                  display: block;
+                  font-size: 14px;
+                  color: #F40;
+                  height: 18px;
+                }
+              }
+              li:hover {
+                color: #F40;
               }
             }
           }
