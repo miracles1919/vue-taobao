@@ -107,6 +107,16 @@
                 </div>
               </div>
             </div>
+            <div class="tipoff">
+              网上有害信息举报专区
+              <i class="triangle" />
+            </div>
+            <div class="notice">
+              <ul class="notice_hd">
+                <li v-for="(item, index) in noticeList" v-bind:class="[ noticeIndex === index ? 'selected' : '' , 'tab']" :key="index" v-on:mouseenter="noticeHover(index)">{{ item }}</li>
+              </ul>
+              <notice-html v-bind:index="noticeIndex" />
+            </div>
           </div>
         </div>
       </div>
@@ -503,6 +513,80 @@
             }
           }
         }
+        .tipoff {
+          padding-left: 82px;
+          color: #f40;
+          display: block;
+          height: 26px;
+          line-height: 26px;
+          background: #ffe4dd;
+          font-size: 12px;
+          position: relative;
+          cursor: pointer;
+          .triangle {
+            position: absolute;
+            right: 52px;
+            top: 8px;
+            line-height: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            margin-left: 32px;
+            border-width: 5px 0 5px 7px;
+            border-color: transparent transparent transparent #f40;
+          }
+        }
+        .notice {
+          height: 108px;
+          padding-top: 10px;
+          width: 290px;
+          background-color: #FFF;
+          .notice_hd {
+            position: relative;
+            height: 24px;
+            margin-top: 4px;
+            overflow: hidden;
+            margin-right: -2px;
+            padding: 0 8px;
+            display: flex;
+            .tab {
+              height: 20px;
+              line-height: 20px;
+              width: 32px;
+              text-align: center;
+              margin: 0 11px;
+              font-size: 12px;
+              cursor: pointer;
+            }
+            .selected {
+              padding: 0;
+              font-weight: 700;
+              border-bottom: 2px solid #F40;
+            }
+          }
+          /deep/ .mod {
+            margin: 0 12px;
+            height: 65px;
+            overflow: hidden;
+            padding-top: 9px;
+            padding-bottom: 6px;
+            font-size: 12px;
+            .h {
+              color: #ff5000;
+            }
+            li {
+              float: left;
+              line-height: 25px;
+              height: 25px;
+              width: 130px;
+              overflow: hidden;
+              cursor: pointer;
+            }
+            li:hover {
+              color: #ff5000;
+            }
+          }
+        }
       }
     }
   }
@@ -512,6 +596,22 @@
 import Header from '@/components/Layout/Header'
 import Menu from '@/components/Home/Menu'
 import Carousel from '@/components/Carousel/Carousel'
+
+let noticeHtml = {
+  template: '<ul class="mod" v-html="notice[index]"></ul>',
+  props: ['index'],
+  data () {
+    return {
+      notice: [
+        '<li class="h" style="width: 260px">阿里集团战略投资居然之家 开启家居新零售时代</li><li>天猫38女王节正式上线</li><li>外媒为盒马速度点赞</li>',
+        '<li>《阿里创作平台管理规范</li><li>《淘宝网数字娱乐市场</li><li>《淘宝网大家电须通过</li><li>飞猪旅行集市用车相关</li>',
+        '<li class="h">阿里员工疯了</li><li>评价管理功能上线</li><li>正确的品牌营销推广</li><li>2018年消费者趋势</li>',
+        '<li class="h">公益“护苗”行动招募</li><li class="h">你愿意加入我们吗？</li><li>卖家注意：风险通报！</li><li>售假获刑又起诉！</li>',
+        '<li class="h">九寨沟地震紧急救援</li><li class="h">公益宝贝卖家准入公告</li><li>致百万商家的感谢信</li><li>公益宝贝卖家发票索取</li>'
+      ]
+    }
+  }
+}
 
 export default {
   name: 'Home',
@@ -535,7 +635,10 @@ export default {
         { url: require('./img/d2.png') },
         { url: require('./img/d3.png') }
       ],
-      imgIndex2: 0
+      imgIndex2: 0,
+      noticeList: ['公告', '规则', '论坛', '安全', '公益'],
+      noticeIndex: 0,
+      noticeHtml: ''
     }
   },
   methods: {
@@ -557,12 +660,18 @@ export default {
     },
     updateIndex2: function (index) {
       this.imgIndex2 = index
+    },
+    noticeHover: function (index) {
+      setTimeout(() => {
+        this.noticeIndex = index
+      }, 200)
     }
   },
   components: {
     Header,
     Menu,
-    Carousel
+    Carousel,
+    noticeHtml
   }
 }
 </script>
