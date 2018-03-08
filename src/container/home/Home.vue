@@ -118,6 +118,18 @@
               <notice-html v-bind:index="noticeIndex" />
             </div>
           </div>
+          <div class="conve_div">
+            <ul class="conve_list">
+              <li class="conve_item" v-for="item in iconList" :key="item.name">
+                <span v-bind:style="`background-position-y:${item.position}px`"/>
+                <p>{{item.name}}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="app">
+            <h3>阿里APP<span>更多 ></span></h3>
+            <img src="./img/app.jpg"/>
+          </div>
         </div>
       </div>
     </div>
@@ -588,6 +600,65 @@
           }
         }
       }
+      .conve_div {
+        border-top: 1px solid #f4f4f4;
+        background: #fff;
+        .conve_list {
+          width: 294px;
+          display: flex;
+          flex-wrap: wrap;
+          .conve_item {
+            width: 73px;
+            height: 77px;
+            border: 1px solid #f4f4f4;
+            border-left-color: transparent;
+            border-top-color: transparent;
+            text-align: center;
+            cursor: pointer;
+
+            span {
+              display: inline-block;
+              width: 24px;
+              height: 24px;
+              margin-top: 11px;
+              background-repeat: no-repeat;
+              background: url('./img/icon.png') 0 0 no-repeat;
+              background-size: 24px 597px;
+            }
+            p {
+              color: #333;
+              line-height: 24px;
+              height: 34px;
+              font-size: 12px;
+            }
+          }
+          .conve_item:hover {
+            p {
+              color: #ff5000;
+            }
+          }
+        }
+      }
+      .app {
+        height: 110px;
+        background: #fff;
+        h3 {
+          font-size: 14px;
+          padding-left: 14px;
+          height: 30px;
+          line-height: 30px;
+          font-weight: 700;
+          span {
+            font-size: 12px;
+            float: right;
+            margin-right: 13px;
+          }
+        }
+        img {
+          width: 250px;
+          margin-left: 23px;
+        }
+      }
     }
   }
 </style>
@@ -638,7 +709,21 @@ export default {
       imgIndex2: 0,
       noticeList: ['公告', '规则', '论坛', '安全', '公益'],
       noticeIndex: 0,
-      noticeHtml: ''
+      noticeHtml: '',
+      iconList: [
+        {name: '充话费', position: '0'},
+        {name: '旅行', position: '-85'},
+        {name: '车险', position: '-44'},
+        {name: '游戏', position: '-132'},
+        {name: '彩票', position: '-176'},
+        {name: '电影', position: '-220'},
+        {name: '酒店', position: '-264'},
+        {name: '理财', position: '-308'},
+        {name: '找服务', position: '-352'},
+        {name: '演出', position: '-396'},
+        {name: '水电煤', position: '-440'},
+        {name: '火车票', position: '-484'}
+      ]
     }
   },
   methods: {
