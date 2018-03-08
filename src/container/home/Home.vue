@@ -82,6 +82,12 @@
             <h5>今日热卖</h5>
             <img src="./img/ad2.jpg" />
           </div>
+          <div class="tbh_headline">
+            <div class="headline">
+              <img class="icon" src="./img/tb_head.png"/>
+              <Headline />
+            </div>
+          </div>
         </div>
         <div class="col_right">
           <div class="tbh_member">
@@ -362,6 +368,7 @@
   }
   .bg {
     background-color: #f4f4f4;
+    padding-bottom: 30px;
   }
   .main {
     width: 1190px;
@@ -370,6 +377,7 @@
     display: flex;
     .main_inner {
       display: flex;
+      flex-wrap: wrap;
       .core {
         margin-left: 10px;
         margin-top: 10px;
@@ -427,6 +435,19 @@
           background: #f1f1f1;
           color: #a1a1a1;
           line-height: 24px;
+        }
+      }
+      .tbh_headline {
+        width: 890px;
+        height: 100px;
+        .headline {
+          padding: 14px 14px 12px 20px;
+          margin-top: 5px;
+          background: #fff;
+          display: flex;
+          .icon {
+            height: 73px;
+          }
         }
       }
     }
@@ -667,6 +688,7 @@
 import Header from '@/components/Layout/Header'
 import Menu from '@/components/Home/Menu'
 import Carousel from '@/components/Carousel/Carousel'
+import Headline from '@/components/Carousel/Headline.vue'
 
 let noticeHtml = {
   template: '<ul class="mod" v-html="notice[index]"></ul>',
@@ -756,7 +778,8 @@ export default {
     Header,
     Menu,
     Carousel,
-    noticeHtml
+    noticeHtml,
+    Headline
   }
 }
 </script>

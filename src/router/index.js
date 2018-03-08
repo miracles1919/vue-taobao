@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Header from '@/components/Layout/Header'
-// import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '@/components/HelloWorld'
 import Home from '@/container/home/Home'
 import Login from '@/container/login/Login'
 
@@ -20,6 +20,10 @@ export default new Router({
     {
       path: '/home',
       component: Home
+    },
+    {
+      path: 'Hello',
+      component: HelloWorld
     }
   ]
 })

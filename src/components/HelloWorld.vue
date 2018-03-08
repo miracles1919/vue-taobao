@@ -1,11 +1,10 @@
 <template>
   <div class="hello">
-    <Header></Header>
+    <div>hello world</div>
   </div>
 </template>
 
 <script>
-import Header from './Layout/Header'
 
 export default {
   name: 'HelloWorld',
@@ -15,7 +14,6 @@ export default {
     }
   },
   components: {
-    Header
   }
 }
 </script>
