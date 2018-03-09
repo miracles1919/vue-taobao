@@ -768,11 +768,15 @@ export default {
     updateIndex2: function (index) {
       this.imgIndex2 = index
     },
-    noticeHover: function (index) {
-      setTimeout(() => {
-        this.noticeIndex = index
-      }, 200)
-    }
+    noticeHover: (function () {
+      let timer = null
+      return function (index) {
+        clearInterval(timer)
+        timer = setTimeout(() => {
+          this.noticeIndex = index
+        }, 200)
+      }
+    })()
   },
   components: {
     Header,
