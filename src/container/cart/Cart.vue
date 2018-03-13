@@ -25,7 +25,12 @@
           <div class="warp_line"><div class="floater" v-bind:style="`left: ${switchLine}px`"/></div>
         </div>
         <div class="th">
-          <div class="all"></div>
+          <div class="all">
+            <div>
+              <Checkbox />
+              &nbsp;&nbsp;全选
+            </div>
+          </div>
           <div class="item">商品信息</div>
           <div class="info"></div>
           <div class="price">单价</div>
@@ -191,6 +196,15 @@
           width: 45px;
           font-size: 12px;
           text-align: left;
+          position: relative;
+          >div {
+            position: absolute;
+            display: flex;
+            left: 15px;
+            top: 0;
+            width: 80px;
+            cursor: pointer;
+          }
         }
         .item {
           width: 302px;
@@ -218,6 +232,7 @@
 
 <script>
 import Header from '@/components/Layout/Header'
+import Checkbox from '@/components/Checkbox/Checkbox'
 
 export default {
   name: 'Cart',
@@ -241,7 +256,8 @@ export default {
     }
   },
   components: {
-    Header
+    Header,
+    Checkbox
   }
 }
 </script>
