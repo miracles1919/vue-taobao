@@ -1,0 +1,247 @@
+<template>
+  <div>
+    <Header />
+    <div class="content">
+      <div class="header">
+        <span class="logo" />
+        <div class="search">
+          <ul class="switch_nav">
+            <li class="item">宝贝</li>
+            <s><s/></s>
+          </ul>
+          <div class="input_box"><input/></div>
+          <button>搜 索</button>
+        </div>
+      </div>
+      <div class="cart">
+        <div class="filter_bar">
+          <ul class="cart_switch">
+            <li v-for="(item, index) in switchList" v-bind:class="switchIndex === index ? 'current' : ''" :key="`s${index}`" v-on:mouseenter="switchHover(index)" v-on:mouseleave="switchBlur">
+              <em>{{ item.title }}</em>
+              <span class="number">{{ item.num }}</span>
+              <span v-if="index !== (switchList.length - 1)" class="pipe" />
+            </li>
+          </ul>
+          <div class="warp_line"><div class="floater" v-bind:style="`left: ${switchLine}px`"/></div>
+        </div>
+        <div class="th">
+          <div class="all"></div>
+          <div class="item">商品信息</div>
+          <div class="info"></div>
+          <div class="price">单价</div>
+          <div class="account">单价</div>
+          <div class="sum">金额</div>
+          <div class="op">操作</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="less">
+  .content {
+    width: 990px;
+    margin: 0 auto;
+    .header {
+      padding: 20px 0 40px;
+      position: relative;
+      height: 95px;
+      display: flex;
+      justify-content: space-between;
+      .logo {
+        display: block;
+        width: 181px;
+        height: 45px;
+        overflow: hidden;
+        background-position: -110px 0;
+        background-color: #fff;
+        background-image: image-set(url("./img/tb_icon.png") 2x);
+      }
+      .search {
+        background: #f50;
+        width: 515px;
+        height: 35px;
+        display: flex;
+        .switch_nav {
+          width: 76px;
+          height: 29px;
+          border-right: 1px solid #e5e5e5;
+          border-left: 1px solid #f5f5f5;
+          margin-top: 3px;
+          margin-left: 3px;
+          position: relative;
+          .item {
+            background: #f5f5f5;
+            border-radius: 0;
+            border: 0 none;
+            color: #6b6b6b;
+            font-weight: 500;
+            font-size: 12px;
+            height: 100%;
+            width: 100%;
+            text-indent: 15px;
+            text-align: left;
+            line-height: 29px;
+          }
+          s {
+            line-height: 0;
+            border-width: 4px;
+            border-color: #666 transparent transparent;
+            border-style: solid dashed dashed;
+            height: 0;
+            position: absolute;
+            top: 14px;
+            font-size: 0;
+            left: 56px;
+            z-index: 10;
+            s {
+              border-width: 3px;
+              border-color: #f6f6f6 transparent transparent;
+              top: -4px;
+              left: -3px;
+              position: absolute;
+            }
+          }
+        }
+        .input_box {
+          margin-top: 3px;
+          background: #fff;
+          height: 29px;
+          width: 343px;
+          input {
+            text-indent: 10px;
+            padding: 6px 0 5px;
+          }
+        }
+        button {
+          height: 35px;
+          width: 93px;
+          font-size: 22px;
+          background: #f50;
+          color: #fff;
+          font-weight: 700;
+          cursor: pointer;
+        }
+      }
+    }
+    .cart {
+      min-height: 400px;
+      .filter_bar {
+        position: relative;
+        .cart_switch {
+          height: 33px;
+          display: flex;
+          .current {
+            color: #f40;
+          }
+          li {
+            font-weight: 700;
+            font-size: 16px;
+            height: 16px;
+            line-height: 1.1;
+            text-align: center;
+            padding: 0 0 15px 0;
+            cursor: pointer;
+            margin-left: -1px;
+            em {
+              margin-left: 25px;
+              font-style: normal;
+            }
+            .number {
+              color: #f40;
+              font-size: 14px;
+              margin: 0 25px 0 5px;
+              font-weight: 400;
+              font-family: Verdana,Tahoma,arial;
+            }
+            .pipe {
+              width: 1px;
+              height: 12px;
+              display: inline-block;
+              background: #e8e8e8;
+            }
+          }
+          li:first-child {
+            em {
+              margin-left: 15px;
+            }
+          }
+        }
+        .warp_line {
+          background: #e6e6e6;
+          height: 2px;
+          position: relative;
+          .floater {
+            background: #f40;
+            height: 2px;
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+            width: 132px;
+          }
+        }
+      }
+      .th {
+        height: 50px;
+        line-height: 50px;
+        color: #3c3c3c;
+        font-size: 12px;
+        display: flex;
+        .all {
+          width: 45px;
+          font-size: 12px;
+          text-align: left;
+        }
+        .item {
+          width: 302px;
+          padding-left: 91px;
+        }
+        .info {
+          width: 192px;
+        }
+        .price, .account {
+          width: 120px;
+          padding-left: 10px;
+        }
+        .sum {
+          width: 105px;
+        }
+        .op {
+          width: 84px;
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+
+</style>
+
+<script>
+import Header from '@/components/Layout/Header'
+
+export default {
+  name: 'Cart',
+  data () {
+    return {
+      switchIndex: 0,
+      switchList: [
+        { title: '全部商品', num: 30 },
+        { title: '降价商品', num: 3 },
+        { title: '库存紧张', num: 0 }
+      ],
+      switchLine: 0
+    }
+  },
+  methods: {
+    switchHover: function (index) {
+      this.switchLine = index * 138
+    },
+    switchBlur: function () {
+      this.switchLine = this.switchIndex * 138
+    }
+  },
+  components: {
+    Header
+  }
+}
+</script>

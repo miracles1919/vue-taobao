@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Header from '@/components/Layout/Header'
-import HelloWorld from '@/components/HelloWorld'
 import Home from '@/container/home/Home'
 import Login from '@/container/login/Login'
+import Cart from '@/container/cart/Cart'
 
 Vue.use(Router)
 
@@ -22,8 +22,8 @@ export default new Router({
       component: Home
     },
     {
-      path: 'Hello',
-      component: HelloWorld
+      path: '/cart',
+      component: Cart
     }
   ]
 })
