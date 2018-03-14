@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <input type="checkbox" v-bind:checked="isCheck"/>
+  <div :style="wrapStyle || ''">
+    <input type="checkbox" :checked="checked" @click="onClick"/>
   </div>
 </template>
 
@@ -8,9 +8,16 @@
 
 export default {
   name: 'Checkbox',
+  props: ['wrapStyle'],
   data () {
     return {
-      isCheck: false
+      checked: false
+    }
+  },
+  methods: {
+    onClick () {
+      this.checked = !this.checked
+      this.$emit('onChange', this.checked)
     }
   },
   components: {

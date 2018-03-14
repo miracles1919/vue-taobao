@@ -27,17 +27,20 @@
         <div class="th">
           <div class="all">
             <div>
-              <Checkbox />
+              <Checkbox @onChange="changeState"/>
               &nbsp;&nbsp;全选
             </div>
           </div>
           <div class="item">商品信息</div>
           <div class="info"></div>
           <div class="price">单价</div>
-          <div class="account">单价</div>
+          <div class="account">数量</div>
           <div class="sum">金额</div>
           <div class="op">操作</div>
         </div>
+        <cart-item />
+        <cart-item />
+        <cart-item />
       </div>
     </div>
   </div>
@@ -233,6 +236,7 @@
 <script>
 import Header from '@/components/Layout/Header'
 import Checkbox from '@/components/Checkbox/Checkbox'
+import CartItem from './CartItem'
 
 export default {
   name: 'Cart',
@@ -253,11 +257,15 @@ export default {
     },
     switchBlur: function () {
       this.switchLine = this.switchIndex * 138
+    },
+    changeState: function (state) {
+      console.log(state)
     }
   },
   components: {
     Header,
-    Checkbox
+    Checkbox,
+    CartItem
   }
 }
 </script>
