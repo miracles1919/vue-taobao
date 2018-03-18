@@ -1,16 +1,16 @@
 <template>
   <div class="order">
     <div class="head">
-      <checkbox @onChange="check" :isCheck="data.check"/>
+      <checkbox @onChange="allCheck" :isCheck="data.check" :ckey="data.shopid"/>
       &nbsp;&nbsp;
       <span class="shop_icon"/>
       店铺：
       <span class="shop">{{shop}}</span>
     </div>
-    <div class="content" v-for="(item, index) in itemList" :key="item.id">
+    <div class="content" v-for="(item, index) in itemList" :key="item.id" :style="index === 0 ? 'border-top:1px solid #ccc' : ''">
       <ul>
         <li class="td_chk">
-          <checkbox wrapStyle="text-align: right;padding-right: 15px" @onChange="check" :ckey="`${item.id}`"/>
+          <checkbox wrapStyle="text-align: right;padding-right: 15px" @onChange="check" :ckey="`${item.id}`" :isCheck="item.check"/>
         </li>
         <li class="td_item">
           <img :src="item.img" />
@@ -79,6 +79,7 @@
     }
     .content {
       border: 1px solid #ccc;
+      border-top: 0;
       >ul {
         background: #fcfcfc;
         display: flex;
@@ -194,9 +195,6 @@
         }
       }
     }
-    .content:last-child {
-      border-top: 0;
-    }
   }
 </style>
 
@@ -231,6 +229,9 @@ export default {
     },
     check: function (isCheck, key) {
       this.$emit('onCheck', key, isCheck)
+    },
+    allCheck: function (isCheck, key) {
+      this.$emit('shopCheck', key, isCheck)
     }
   },
   components: {

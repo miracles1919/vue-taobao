@@ -1,6 +1,6 @@
 <template>
   <div :style="wrapStyle || ''">
-    <input type="checkbox" :checked="isCheck || checked" @click="onClick"/>
+    <input type="checkbox" :checked="isCheck" @click="onClick"/>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   methods: {
     onClick () {
       this.checked = !this.checked
-      this.$emit('onChange', this.checked, this.ckey)
+      this.$emit('onChange', !this.isCheck, this.ckey)
     }
   },
   components: {

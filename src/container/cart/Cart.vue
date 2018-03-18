@@ -27,7 +27,7 @@
         <div class="th">
           <div class="all">
             <div>
-              <Checkbox @onChange="changeState"/>
+              <Checkbox @onChange="allCheck" :isCheck="all"/>
               &nbsp;&nbsp;全选
             </div>
           </div>
@@ -38,10 +38,10 @@
           <div class="sum">金额</div>
           <div class="op">操作</div>
         </div>
-        <cart-item v-for="(item, index) in cartList" :key="`cart${index}`" :data="item" :index="index" @onCheck="onCheck" @update="sum"/>
+        <cart-item v-for="(item, index) in cartList" :key="`cart${index}`" :data="item" :index="index" @onCheck="onCheck" @update="update" @shopCheck="shopCheck"/>
         <div class="foot_bar">
           <div class="left">
-            <div class="all"><checkbox wrapStyle="marginRight: 5px" />全选</div>
+            <div class="all"><checkbox wrapStyle="marginRight: 5px" :isCheck="all" @onChange="allCheck"/>全选</div>
             <div class="operation">
               <span>删除</span>
               <span>清除失效宝贝</span>
@@ -363,8 +363,7 @@ export default {
           img: require('./img/mi.jpg'),
           basic: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
           info: {
-            颜色: '黑色',
-            尺码: 'M'
+            颜色: '黑色'
           },
           price: '79.00',
           num: 1,
@@ -374,16 +373,32 @@ export default {
           img: require('./img/mi.jpg'),
           basic: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
           info: {
-            颜色: '黑色',
-            尺码: 'S'
+            颜色: '白色'
           },
           price: '69.00',
           num: 2,
           check: false
         }]
+      }, {
+        shop: 'NOTHOME',
+        shopid: 'nh',
+        check: false,
+        itemList: [{
+          id: 'nh-0',
+          img: require('./img/mi.jpg'),
+          basic: 'NOTHOMME日系潮牌复古做旧拼接撞色工装夹克男款翻领外套ifashion',
+          info: {
+            颜色: '白色',
+            尺码: 'S'
+          },
+          price: '88.00',
+          num: 1,
+          check: false
+        }]
       }],
       total: 0,
-      selected: 0
+      selected: 0,
+      all: false
     }
   },
   methods: {
@@ -404,6 +419,7 @@ export default {
         let { itemList } = cart
         itemList.forEach((item, index) => {
           if (item.id === key) {
+            console.log(check)
             this.cartList[cindex].itemList[index].check = check
           }
           if (item.check) {
@@ -418,20 +434,57 @@ export default {
           this.cartList[cindex].check = false
         }
       })
+      // 是否全选
+      if (this.cartList.filter(item => !item.check).length === 0) {
+        this.all = true
+      } else {
+        this.all = false
+      }
       this.total = total
       this.selected = selected
     },
-    sum: function () {
+    shopCheck: function (key, check) {
+      this.cartList.forEach((item, cindex) => {
+        if (item.shopid === key) {
+          let { itemList } = item
+          this.cartList[cindex].check = check
+          itemList.forEach((_item, index) => {
+            this.cartList[cindex].itemList[index].check = check
+          })
+        }
+      })
+      if (this.cartList.filter(item => !item.check).length === 0) {
+        this.all = true
+      } else {
+        this.all = false
+      }
+      this.update()
+    },
+    allCheck: function (check) {
+      this.cartList.forEach((item, cindex) => {
+        let { itemList } = item
+        this.cartList[cindex].check = check
+        itemList.forEach((_item, index) => {
+          this.cartList[cindex].itemList[index].check = check
+        })
+      })
+      this.all = check
+      this.update()
+    },
+    update: function () {
       let total = 0
+      let selected = 0
       this.cartList.forEach(cart => {
         let { itemList } = cart
         itemList.forEach(item => {
           if (item.check) {
             total += item.price * item.num
+            selected++
           }
         })
       })
       this.total = total
+      this.selected = selected
     }
   },
   components: {
