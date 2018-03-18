@@ -38,15 +38,41 @@
           <div class="sum">金额</div>
           <div class="op">操作</div>
         </div>
-        <cart-item />
-        <cart-item />
-        <cart-item />
+        <cart-item v-for="(item, index) in cartList" :key="`cart${index}`" :data="item" :index="index" @onCheck="onCheck" @update="sum"/>
+        <div class="foot_bar">
+          <div class="left">
+            <div class="all"><checkbox wrapStyle="marginRight: 5px" />全选</div>
+            <div class="operation">
+              <span>删除</span>
+              <span>清除失效宝贝</span>
+              <span>移入收藏夹</span>
+              <span>分享</span>
+            </div>
+          </div>
+          <div class="right">
+            <div class="selected">
+              <span>已选商品</span>
+              <em>{{ selected }}</em>
+              <span>件</span>
+              <div class="arrow_box" />
+            </div>
+            <div>
+              <span>合计（不含运费）：</span>
+              <strong class="price">
+                <em><span>&nbsp;</span>{{ total }}</em>
+              </strong>
+            </div>
+            <button :class="['btn', total > 0 ? 'buy' : '']">结&nbsp;算</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="less">
+  @hover: #f40;
+
   .content {
     width: 990px;
     margin: 0 auto;
@@ -134,6 +160,7 @@
     }
     .cart {
       min-height: 400px;
+      padding-bottom: 50px;
       .filter_bar {
         position: relative;
         .cart_switch {
@@ -228,6 +255,84 @@
           padding-left: 15px;
         }
       }
+      .foot_bar {
+        position: fixed;
+        bottom: -1px;
+        height: 50px;
+        line-height: 50px;
+        width: 990px;
+        background: #e5e5e5;
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        .left {
+          display: flex;
+          .all {
+            width: 55px;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 5px;
+            display: flex;
+          }
+          .operation {
+            span {
+              color: #3c3c3c;
+              margin-left: 25px;
+              cursor: pointer;
+            }
+            span:hover {
+              color: @hover;
+            }
+          }
+        }
+        .right {
+          display: flex;
+          padding-left: 20px;
+          .selected {
+            line-height: 46px;
+            em {
+              font-weight: 700;
+              font-size: 18px;
+              font-family: tohoma,arial;
+              color: @hover;
+            }
+            .arrow_box {
+              display: inline-block;
+              width: 5px;
+              height: 6px;
+              background-position: 0 -115px;
+              margin: 21px 10px 0 6px;
+              background-image: image-set(url("./img/tb_icon.png") 2x);
+            }
+          }
+          .price {
+            color: #f40;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 48px;
+            font-family: Arial;
+            vertical-align: middle;
+            em {
+              font-weight: 700;
+              font-size: 22px;
+              padding-right: 3px;
+            }
+          }
+          .btn {
+            background: #B0B0B0;
+            color: #fff;
+            border-left: 1px solid #e7e7e7;
+            width: 119px;
+            cursor: not-allowed;
+            font-size: 20px;
+            border-radius: 2px;
+          }
+          .buy {
+            background: @hover;
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 
@@ -248,7 +353,37 @@ export default {
         { title: '降价商品', num: 3 },
         { title: '库存紧张', num: 0 }
       ],
-      switchLine: 0
+      switchLine: 0,
+      cartList: [{
+        shop: '小米官方旗舰店1',
+        shopid: 'xm',
+        check: false,
+        itemList: [{
+          id: 'xm-0',
+          img: require('./img/mi.jpg'),
+          basic: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
+          info: {
+            颜色: '黑色',
+            尺码: 'M'
+          },
+          price: '79.00',
+          num: 1,
+          check: false
+        }, {
+          id: 'xm-1',
+          img: require('./img/mi.jpg'),
+          basic: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
+          info: {
+            颜色: '黑色',
+            尺码: 'S'
+          },
+          price: '69.00',
+          num: 2,
+          check: false
+        }]
+      }],
+      total: 0,
+      selected: 0
     }
   },
   methods: {
@@ -260,6 +395,43 @@ export default {
     },
     changeState: function (state) {
       console.log(state)
+    },
+    onCheck: function (key, check) {
+      let total = 0
+      let selected = 0
+      // 遍历 将选中的物品check设置为true
+      this.cartList.forEach((cart, cindex) => {
+        let { itemList } = cart
+        itemList.forEach((item, index) => {
+          if (item.id === key) {
+            this.cartList[cindex].itemList[index].check = check
+          }
+          if (item.check) {
+            total += item.price * item.num
+            selected++
+          }
+        })
+        // 判断店铺所有商品是否选中
+        if (itemList.filter(item => !item.check).length === 0) {
+          this.cartList[cindex].check = true
+        } else {
+          this.cartList[cindex].check = false
+        }
+      })
+      this.total = total
+      this.selected = selected
+    },
+    sum: function () {
+      let total = 0
+      this.cartList.forEach(cart => {
+        let { itemList } = cart
+        itemList.forEach(item => {
+          if (item.check) {
+            total += item.price * item.num
+          }
+        })
+      })
+      this.total = total
     }
   },
   components: {

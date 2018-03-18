@@ -1,21 +1,21 @@
 <template>
   <div class="order">
     <div class="head">
-      <checkbox />
+      <checkbox @onChange="check" :isCheck="data.check"/>
       &nbsp;&nbsp;
       <span class="shop_icon"/>
       店铺：
-      <span class="shop">小米官方旗舰店</span>
+      <span class="shop">{{shop}}</span>
     </div>
-    <div class="content">
+    <div class="content" v-for="(item, index) in itemList" :key="item.id">
       <ul>
         <li class="td_chk">
-          <checkbox wrapStyle="text-align: right;padding-right: 15px"/>
+          <checkbox wrapStyle="text-align: right;padding-right: 15px" @onChange="check" :ckey="`${item.id}`"/>
         </li>
         <li class="td_item">
-          <img src="./img/mi.jpg" />
+          <img :src="item.img" />
           <div class="info">
-            <div class="basic">xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属</div>
+            <div class="basic">{{item.basic}}</div>
             <div class="icons">
               <img src="./img/card.png" />
               <img src="./img/7.png" />
@@ -24,21 +24,20 @@
           </div>
         </li>
         <li class="td_info">
-          <p class="line">颜色：黑色</p>
-          <p class="line">尺码：M</p>
+          <p class="line" v-for="(item, index) in infoList" :key="index">{{item[0]}}：{{item[1]}}</p>
         </li>
         <li class="td_price">
-          <div><em>￥79.00</em></div>
+          <div><em>{{item.price}}</em></div>
         </li>
         <li class="td_account">
           <div class="warp">
-            <span>-</span>
-            <input value="1" />
-            <span>+</span>
+            <span :class="item.num > 1 ? '' : 'no_minus'" @click="subtract(index)">-</span>
+            <input :value="item.num" />
+            <span @click="add(index)">+</span>
           </div>
         </li>
         <li class="td_sum">
-          <em>￥79.00</em>
+          <em>￥{{item.price * item.num}}</em>
         </li>
         <li class="td_op">
           <span>移入收藏夹</span>
@@ -167,6 +166,10 @@
             padding: 4px 0;
             background-color: #fff;
           }
+          .no_minus {
+            color: #e5e5e5;
+            cursor: default;
+          }
         }
       }
       .td_sum {
@@ -191,6 +194,9 @@
         }
       }
     }
+    .content:last-child {
+      border-top: 0;
+    }
   }
 </style>
 
@@ -199,9 +205,32 @@ import Checkbox from '@/components/Checkbox/Checkbox'
 
 export default {
   name: 'CartItem',
+  props: ['data', 'index'],
   data () {
     return {
-      msg: 'hello world'
+      shop: '',
+      itemList: [],
+      infoList: []
+    }
+  },
+  created: function () {
+    let { shop, itemList } = this.data
+    this.itemList = itemList
+    this.shop = shop
+  },
+  methods: {
+    add: function (index) {
+      this.itemList[index].num += 1
+      this.$emit('update')
+    },
+    subtract: function (index) {
+      if (this.itemList[index].num > 1) {
+        this.itemList[index].num -= 1
+        this.$emit('update')
+      }
+    },
+    check: function (isCheck, key) {
+      this.$emit('onCheck', key, isCheck)
     }
   },
   components: {
