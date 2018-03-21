@@ -49,6 +49,7 @@
         <li><span>网站导航</span></li>
       </ul>
     </div>
+    <router-view style="background: #fff"/>
   </div>
 </template>
 

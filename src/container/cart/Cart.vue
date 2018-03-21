@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header />
     <div class="content">
       <div class="header">
         <span class="logo" />

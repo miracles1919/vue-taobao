@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header/>
     <div class="top_wrap">
       <div class="logo"><img src="./img/logo.png"/></div>
       <div class="search_wrap">
@@ -146,7 +145,6 @@
   .top_wrap {
     width: 1190px;
     margin: 0 auto;
-    margin-top: 24px;
     display: flex;
     position: relative;
 

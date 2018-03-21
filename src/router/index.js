@@ -4,6 +4,7 @@ import Header from '@/components/Layout/Header'
 import Home from '@/container/home/Home'
 import Login from '@/container/login/Login'
 import Cart from '@/container/cart/Cart'
+import Detail from '@/container/detail/Detail'
 
 Vue.use(Router)
 
@@ -11,19 +12,21 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Header
+      component: Header,
+      children: [{
+        path: 'home',
+        component: Home
+      }, {
+        path: 'cart',
+        component: Cart
+      }, {
+        path: 'detail',
+        component: Detail
+      }]
     },
     {
       path: '/login',
       component: Login
-    },
-    {
-      path: '/home',
-      component: Home
-    },
-    {
-      path: '/cart',
-      component: Cart
     }
   ]
 })
