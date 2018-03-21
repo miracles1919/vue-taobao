@@ -21,7 +21,7 @@
             </label>
             <input type="text" placeholder="请输入密码"/>
           </div>
-          <button class="btn">登录</button>
+          <button class="btn" @click="loop">登录</button>
           <div class="other_login">
             <span>支付宝登录</span>
             <span>微博登录</span>
@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
   .head {
     width: 1200px;
     margin: 20px auto;
@@ -167,9 +167,9 @@
 <script>
 export default {
   name: 'Login',
-  data () {
-    return {
-      msg: 'hello world'
+  methods: {
+    loop: function () {
+      this.$router.push('/home')
     }
   }
 }

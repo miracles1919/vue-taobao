@@ -28,13 +28,14 @@
         </li>
         <li><span>消息</span></li>
         <li><span>手机逛淘宝</span></li>
+        <li><span @click="loop('/login')">退出</span></li>
       </ul>
       <ul class="nav_right">
         <li>
           <span>我的淘宝</span>
         </li>
         <li>
-          <span>购物车</span>
+          <span @click="loop('/cart')">购物车</span>
         </li>
         <li>
           <span>收藏夹</span>
@@ -167,10 +168,12 @@ export default {
       let key = e.target.getAttribute('data-key')
       this[key] = true
     },
-
     blur: function (e) {
       let key = e.target.getAttribute('data-key')
       this[key] = false
+    },
+    loop: function (router = '/') {
+      this.$router.push(router)
     }
   }
 }
