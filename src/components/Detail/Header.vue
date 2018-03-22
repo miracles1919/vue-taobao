@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="head">
-      <img class="icon" src="./img/tmall.png" />
+      <img class="icon" src="../Layout/img/tmall.png" />
       <div class="shop">
         <div class="slogo">
           <strong>libetter旗舰店</strong>
@@ -22,6 +22,7 @@
           <input placeholder="搜索 天猫 商品/品牌/店铺" />
           <button>搜天猫</button>
         </div>
+        <button class="own">搜本店</button>
       </div>
     </div>
   </div>
@@ -85,7 +86,7 @@
             color: #333;
             background-position: -110px 0;
             display: inline-block;
-            background-image: image-set(url("./img/wang.gif") 4x);
+            background-image: image-set(url("img/wang.gif") 4x);
           }
         }
       }
@@ -121,6 +122,13 @@
       position: absolute;
       right: 0px;
       top: 20px;
+      @include flex;
+      .own {
+        position: unset;
+        height: 36px;
+        background: #333;
+        margin-left: 2px;
+      }
     }
     .search {
       border: solid #ff0036;

@@ -1,55 +1,57 @@
 <template>
-  <div class="head_bg">
-    <div class="nav">
-      <ul class="nav_left">
-        <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="areaShow ? navHover : ''" data-key="areaShow">
-          <span>中国大陆</span>
-          <div v-show="areaShow" class="menu">
-            <ul class="area_list">
-              <li v-for="item in areaList" :key="item">{{ item }}</li>
-            </ul>
-          </div>
-        </li>
-        <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="userShow ? navHover : ''" data-key="userShow">
-          <span>遮不住的时光</span>
-          <div v-show="userShow" class="menu">
-            <div class="user_menu">
-              <div style="display: flex">
-                <img class="avatar" src="./img/avatar.jpeg"/>
-                <div class="info">
-                  <p><span style="margin-right: 10px">账号管理</span>|<span style="margin-left: 10px">退出</span></p>
-                  <p>淘气值：627</p>
-                  <p>普通会员</p>
-                </div>
-              </div>
-              <a class="privilege" href="#">查看你的专属权益</a>
+  <div>
+    <div class="head_bg">
+      <div class="nav">
+        <ul class="nav_left">
+          <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="areaShow ? navHover : ''" data-key="areaShow">
+            <span>中国大陆</span>
+            <div v-show="areaShow" class="menu">
+              <ul class="area_list">
+                <li v-for="item in areaList" :key="item">{{ item }}</li>
+              </ul>
             </div>
-          </div>
-        </li>
-        <li><span>消息</span></li>
-        <li><span>手机逛淘宝</span></li>
-        <li><span @click="loop('/login')">退出</span></li>
-      </ul>
-      <ul class="nav_right">
-        <li>
-          <span>我的淘宝</span>
-        </li>
-        <li>
-          <span @click="loop('/cart')">购物车</span>
-        </li>
-        <li>
-          <span>收藏夹</span>
-        </li>
-        <li>
-          <span>商品分类</span>
-        </li>
-        <li>|</li>
-        <li><span>卖家中心</span></li>
-        <li><span>联系客服</span></li>
-        <li><span>网站导航</span></li>
-      </ul>
+          </li>
+          <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="userShow ? navHover : ''" data-key="userShow">
+            <span>遮不住的时光</span>
+            <div v-show="userShow" class="menu">
+              <div class="user_menu">
+                <div style="display: flex">
+                  <img class="avatar" src="./img/avatar.jpeg"/>
+                  <div class="info">
+                    <p><span style="margin-right: 10px">账号管理</span>|<span style="margin-left: 10px">退出</span></p>
+                    <p>淘气值：627</p>
+                    <p>普通会员</p>
+                  </div>
+                </div>
+                <a class="privilege" href="#">查看你的专属权益</a>
+              </div>
+            </div>
+          </li>
+          <li><span>消息</span></li>
+          <li><span>手机逛淘宝</span></li>
+          <li><span @click="loop('/login')">退出</span></li>
+        </ul>
+        <ul class="nav_right">
+          <li>
+            <span>我的淘宝</span>
+          </li>
+          <li>
+            <span @click="loop('/cart')">购物车</span>
+          </li>
+          <li>
+            <span>收藏夹</span>
+          </li>
+          <li>
+            <span>商品分类</span>
+          </li>
+          <li>|</li>
+          <li><span>卖家中心</span></li>
+          <li><span>联系客服</span></li>
+          <li><span>网站导航</span></li>
+        </ul>
+      </div>
     </div>
-    <router-view style="background: #fff"/>
+    <router-view/>
   </div>
 </template>
 

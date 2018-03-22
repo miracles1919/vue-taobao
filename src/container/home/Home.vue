@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-top: 24px;">
     <div class="top_wrap">
       <div class="logo"><img src="./img/logo.png"/></div>
       <div class="search_wrap">
