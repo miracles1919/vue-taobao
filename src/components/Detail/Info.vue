@@ -1,39 +1,29 @@
 <template>
   <div class="info">
     <div class="hd">
-      <h1>Lilbetter男士短袖 时尚圆领印花体恤简约宽松上衣帅气半袖T恤男</h1>
-      <p>领券满199减10 299减20</p>
+      <h1>{{title}}</h1>
+      <p>{{subtitle}}</p>
     </div>
     <div class="price-panel">
       <dl>
         <dt>价格</dt>
-        <dd class="price"><em>¥</em><span>99.00</span></dd>
+        <dd class="price"><em>¥</em><span>{{price}}</span></dd>
       </dl>
       <dl>
         <dt>促销价</dt>
-        <dd class="promo-price"><em>¥</em><span>89.00</span></dd>
+        <dd class="promo-price"><em>¥</em><span>{{promoPrice}}</span></dd>
       </dl>
       <dl>
         <dt>本店活动</dt>
-        <dd class="active">满9.9元,包邮</dd>
+        <dd class="active">{{active}}</dd>
       </dl>
     </div>
     <div class="key">
-      <dl>
-        <dt>尺码</dt>
+      <dl v-for="(key, kindex) in Object.keys(this.sort)" :key="kindex">
+        <dt>{{str2txt[key]}}</dt>
         <dd>
           <ul>
-            <li v-for="(item, index) in sizeList" :key="index" :class="index === sizeIndex ? 'selected' : ''" @click="handleSize(index)">
-              {{item}}<i />
-            </li>
-          </ul>
-        </dd>
-      </dl>
-      <dl>
-        <dt>颜色</dt>
-        <dd>
-          <ul>
-            <li v-for="(item, index) in colorList" :key="index" :class="index === colorIndex ? 'selected' : ''" @click="handleColor(index)">
+            <li v-for="(item, index) in sortObj[key]" :key="index" :class="index === sortIndex[key] ? 'selected' : ''" @click="handleSort(index, key)">
               {{item}}<i />
             </li>
           </ul>
@@ -260,31 +250,37 @@
 <script>
 export default {
   name: 'DetailInfo',
+  props: ['title', 'subtitle', 'price', 'promoPrice', 'active', 'sort'],
   data () {
     return {
-      sizeList: ['165/S', '170/M', '175/L'],
-      sizeIndex: -1,
-      colorList: ['白色', '黑色'],
-      colorIndex: -1,
       account: 1,
-      info: { size: '', color: '' }
+      select: {},
+      str2txt: {
+        size: '尺码',
+        color: '颜色'
+      },
+      sortObj: {},
+      sortIndex: {
+        size: -1,
+        color: -1
+      }
     }
   },
+  created () {
+    let sort = this.sort
+    Object.keys(sort).forEach(key => {
+      this.sortObj[key] = sort[key]
+      this.sortIndex[key] = -1
+    })
+  },
   methods: {
-    handleSize: function (index) {
-      if (index === this.sizeIndex) {
-        this.sizeIndex = -1
+    handleSort: function (index, key) {
+      let val = this.sortIndex[key]
+      if (index === val) {
+        this.sortIndex[key] = -1
       } else {
-        this.sizeIndex = index
-        this.info.size = this.sizeList[index]
-      }
-    },
-    handleColor: function (index) {
-      if (index === this.colorIndex) {
-        this.colorIndex = -1
-      } else {
-        this.colorIndex = index
-        this.info.color = this.colorList[index]
+        this.sortIndex[key] = index
+        this.select[key] = this.sortObj[key][index]
       }
     },
     add: function () {
@@ -298,10 +294,10 @@ export default {
       }
     },
     buy: function () {
-      const info = this.info
+      const select = this.select
       const account = this.account
-      if (Object.values(info).filter(item => item).length === Object.keys(info).length) {
-        console.log({ ...info, account })
+      if (Object.values(select).filter(item => item).length === Object.keys(select).length) {
+        console.log({ ...select, account })
       }
     }
   },

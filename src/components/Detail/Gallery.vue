@@ -43,15 +43,9 @@
 <script>
 export default {
   name: 'Gallery',
+  props: ['imgList'],
   data () {
     return {
-      imgList: [
-        require('./img/tshirt1.jpg'),
-        require('./img/tshirt2.jpg'),
-        require('./img/tshirt3.jpg'),
-        require('./img/tshirt4.jpg'),
-        require('./img/tshirt5.jpg')
-      ],
       select: 0
     }
   },
