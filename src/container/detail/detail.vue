@@ -1,9 +1,9 @@
 <template>
   <div>
     <detail-header />
-    <div class="main" v-for="(item, index) in infoList" :key="index">
+    <div class="main">
       <gallery :imgList="item.imgList"/>
-      <detail-info v-bind="item.info"/>
+      <detail-info v-bind="item.info" :shopid="item.shopid" :itemid="item.itemid"/>
     </div>
   </div>
 </template>
@@ -22,6 +22,9 @@ import Gallery from '@/components/Detail/Gallery'
 import DetailInfo from '@/components/Detail/Info'
 export default {
   name: 'Detail',
+  created () {
+    this.setItem(this.$route.params)
+  },
   data () {
     return {
       infoList: [{
@@ -42,8 +45,44 @@ export default {
             size: ['165/S', '170/M', '175/L'],
             color: ['白色', '黑色']
           }
-        }
+        },
+        shopid: 'lilbetter',
+        itemid: 0
+      }, {
+        imgList: [
+          require('@/components/Detail/img/mi1.jpg'),
+          require('@/components/Detail/img/mi2.jpg'),
+          require('@/components/Detail/img/mi3.jpg'),
+          require('@/components/Detail/img/mi4.jpg'),
+          require('@/components/Detail/img/mi5.jpg')
+        ],
+        info: {
+          title: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
+          subtitle: '双向快充 双USB输出',
+          price: '89',
+          promoPrice: '79',
+          active: '满150元,包邮',
+          sort: {
+            color: ['白色', '黑色']
+          }
+        },
+        shopid: 'xiaomi',
+        itemid: 0
       }]
+    }
+  },
+  methods: {
+    setItem: function (params) {
+      let { id } = params
+      if (id > this.infoList.length - 1) {
+        id = 0
+      }
+      this.item = this.infoList[id]
+    }
+  },
+  watch: {
+    '$route.params' (newParams) {
+      this.setItem(newParams)
     }
   },
   components: {

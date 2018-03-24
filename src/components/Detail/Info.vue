@@ -127,6 +127,7 @@
     }
     .key {
       margin: 15px 20px 24px 10px;
+      min-height: 127px;
       dl {
         padding-bottom: 8px;
         @include flex;
@@ -250,7 +251,7 @@
 <script>
 export default {
   name: 'DetailInfo',
-  props: ['title', 'subtitle', 'price', 'promoPrice', 'active', 'sort'],
+  props: ['title', 'subtitle', 'price', 'promoPrice', 'active', 'sort', 'shopid', 'itemid'],
   data () {
     return {
       account: 1,
@@ -296,8 +297,11 @@ export default {
     buy: function () {
       const select = this.select
       const account = this.account
+      const shopid = this.shopid
+      const itemid = this.itemid
+      console.log(this.shopid)
       if (Object.values(select).filter(item => item).length === Object.keys(select).length) {
-        console.log({ ...select, account })
+        console.log({ ...select, account, shopid, itemid })
       }
     }
   },

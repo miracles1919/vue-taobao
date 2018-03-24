@@ -20,7 +20,7 @@ export default new Router({
         path: 'cart',
         component: Cart
       }, {
-        path: 'detail',
+        path: 'detail/:id',
         component: Detail
       }]
     },
