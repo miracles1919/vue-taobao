@@ -5,6 +5,7 @@ import Home from '@/container/home/Home'
 import Login from '@/container/login/Login'
 import Cart from '@/container/cart/Cart'
 import Detail from '@/container/detail/Detail'
+import Member from '@/container/member/Member'
 
 Vue.use(Router)
 
@@ -22,6 +23,9 @@ export default new Router({
       }, {
         path: 'detail/:id',
         component: Detail
+      }, {
+        path: 'member',
+        component: Member
       }]
     },
     {
