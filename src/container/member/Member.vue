@@ -40,6 +40,7 @@
           </div>
         </div>
         <button class="btn">保 存</button>
+        <div class="table"><Table /></div>
       </div>
     </div>
   </div>
@@ -175,16 +176,24 @@
         margin-left: 105px;
         margin-top: 20px;
       }
+      .table {
+        border: 1px solid #e8e8e8;
+        border-bottom: 0;
+        width: 692px;
+        margin-top: 50px;
+      }
     }
   }
 </style>
 
 <script>
 import MtHeader from '@/components/Layout/MtHeader'
+import Table from '@/components/Table/Table'
 export default {
   name: 'member',
   components: {
-    MtHeader
+    MtHeader,
+    Table
   }
 }
 </script>
