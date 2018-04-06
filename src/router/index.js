@@ -6,6 +6,7 @@ import Login from '@/container/login/Login'
 import Cart from '@/container/cart/Cart'
 import Detail from '@/container/detail/Detail'
 import Member from '@/container/member/Member'
+import Order from '@/container/order/order'
 
 Vue.use(Router)
 
@@ -26,6 +27,9 @@ export default new Router({
       }, {
         path: 'member',
         component: Member
+      }, {
+        path: 'order',
+        component: Order
       }]
     },
     {
