@@ -2,6 +2,8 @@
   <div class="order">
     <step-bar />
     <Address />
+    <Table />
+    <pay-info />
   </div>
 
 </template>
@@ -16,12 +18,16 @@
 <script>
 import StepBar from '@/components/Order/Bar'
 import Address from '@/components/Order/Address'
+import Table from '@/components/Order/Table'
+import PayInfo from '@/components/Order/PayInfo'
 
 export default {
   name: 'order',
   components: {
     StepBar,
-    Address
+    Address,
+    Table,
+    PayInfo
   }
 }
 </script>

@@ -5,17 +5,15 @@
       <span>管理收货地址</span>
     </h3>
     <ul class="list">
-      <li :class="selectIndex === 0 ? 'selected' : ''" @click="onCheck(0)">
-        <div class="tip">
+      <li v-for="(item, index) in list" :class="selectIndex === index ? 'selected' : ''" @click="onCheck(index)" :key="index">
+        <div class="tip" v-if="selectIndex === index">
           <i class="iconfont">&#xe617;</i>
           <span>寄送至</span>
         </div>
-        <Checkbox :isCheck="selectIndex === 0"/>
-        <span class="txt">浙江省 宁波市 江北区 慈城镇 慈湖人家86幢226号106室（曹莹 收）</span>
-        <em>15715848670</em>
+        <Checkbox :isCheck="selectIndex === index"/>
+        <span class="txt">{{item.address}}</span>
+        <em>{{item.phone}}</em>
       </li>
-      <li @click="onCheck(1)"><Checkbox /><span class="txt">浙江省 宁波市 江北区 慈城镇 慈湖人家86幢226号106室（曹莹 收）</span><em>15715848670</em></li>
-      <li @click="onCheck(2)"><Checkbox /><span class="txt">浙江省 杭州市 余杭区 仓前街道 文一西路海创科技中心4幢3楼蕃蕃数据（鲁杰 收) </span><em>15726940632</em></li>
     </ul>
   </div>
 </template>
@@ -96,7 +94,14 @@ export default {
   name: 'Address',
   data () {
     return {
-      selectIndex: 0
+      selectIndex: 0,
+      list: [{
+        address: '浙江省 宁波市 江北区 慈城镇 慈湖人家86幢226号106室（曹莹 收）',
+        phone: '15715848670'
+      }, {
+        address: '浙江省 杭州市 余杭区 仓前街道 文一西路海创科技中心4幢3楼蕃蕃数据（鲁杰 收) ',
+        phone: '15726940632'
+      }]
     }
   },
   methods: {

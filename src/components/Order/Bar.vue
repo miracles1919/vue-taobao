@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex">
     <h1>
-      <i class="logo" />淘宝网
+      <i class="logo" />
     </h1>
     <ul class="step">
       <li class="current">查看购物车</li>
