@@ -23,7 +23,7 @@
         <dt>{{str2txt[key]}}</dt>
         <dd>
           <ul>
-            <li v-for="(item, index) in sortObj[key]" :key="index" :class="index === sortIndex[key] ? 'selected' : ''" @click="handleSort(index, key)">
+            <li v-for="(item, index) in getSort[key]" :key="index" :class="index === sortIndex[key] ? 'selected' : ''" @click="handleSort(index, key)">
               {{item}}<i />
             </li>
           </ul>
@@ -42,7 +42,7 @@
     </div>
     <div class="action">
       <div class="buy" @click="buy">立即购买</div>
-      <div class="basket">加入购物车</div>
+      <div class="basket" @click="addCart">加入购物车</div>
     </div>
     <div class="ser">
       <dl>
@@ -251,7 +251,7 @@
 <script>
 export default {
   name: 'DetailInfo',
-  props: ['title', 'subtitle', 'price', 'promoPrice', 'active', 'sort', 'shopid', 'itemid'],
+  props: ['title', 'subtitle', 'price', 'promoPrice', 'active', 'sort', 'shopid', 'gid'],
   data () {
     return {
       account: 1,
@@ -262,26 +262,29 @@ export default {
       },
       sortObj: {},
       sortIndex: {
-        size: -1,
-        color: -1
+        // size: -1,
+        // color: -1
       }
     }
   },
-  created () {
-    let sort = this.sort
-    Object.keys(sort).forEach(key => {
-      this.sortObj[key] = sort[key]
-      this.sortIndex[key] = -1
-    })
+  computed: {
+    getSort: function () {
+      let obj = {}
+      Object.keys(this.sort).forEach(key => {
+        obj[key] = this.sort[key]
+      })
+      return obj
+    }
   },
   methods: {
     handleSort: function (index, key) {
       let val = this.sortIndex[key]
       if (index === val) {
+        delete this.select[key]
         this.sortIndex[key] = -1
       } else {
-        this.sortIndex[key] = index
-        this.select[key] = this.sortObj[key][index]
+        this.sortIndex = { ...this.sortIndex, [key]: index }
+        this.select[key] = this.getSort[key][index]
       }
     },
     add: function () {
@@ -295,13 +298,23 @@ export default {
       }
     },
     buy: function () {
-      const select = this.select
-      const account = this.account
-      const shopid = this.shopid
-      const itemid = this.itemid
-      console.log(this.shopid)
-      if (Object.values(select).filter(item => item).length === Object.keys(select).length) {
-        console.log({ ...select, account, shopid, itemid })
+      let select = this.select
+      let account = this.account
+      let shopid = this.shopid
+      let gid = this.gid
+      if (Object.keys(this.sort).length === Object.keys(select).length) {
+        console.log({ ...select, account, shopid, gid })
+        this.$router.push('/order')
+      }
+    },
+    addCart: function () {
+      let select = this.select
+      let account = this.account
+      let shopid = this.shopid
+      let gid = this.gid
+      if (Object.keys(this.sort).length === Object.keys(select).length) {
+        console.log({ ...select, account, shopid, gid })
+        this.$router.push('/cart')
       }
     }
   },

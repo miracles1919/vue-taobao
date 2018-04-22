@@ -2,8 +2,8 @@
   <div>
     <detail-header />
     <div class="main">
-      <gallery :imgList="item.imgList"/>
-      <detail-info v-bind="item.info" :shopid="item.shopid" :itemid="item.itemid"/>
+      <gallery :imgList="imgList"/>
+      <detail-info v-bind="info" :shopid="shopid" :gid="gid"/>
     </div>
   </div>
 </template>
@@ -20,69 +20,53 @@
 import DetailHeader from '@/components/Detail/Header'
 import Gallery from '@/components/Detail/Gallery'
 import DetailInfo from '@/components/Detail/Info'
+import request from '@/utils/request'
 export default {
   name: 'Detail',
-  created () {
-    this.setItem(this.$route.params)
+  mounted () {
+    let { id } = this.$route.params
+    this.getDetail(id)
   },
   data () {
     return {
-      infoList: [{
-        imgList: [
-          require('@/components/Detail/img/tshirt1.jpg'),
-          require('@/components/Detail/img/tshirt2.jpg'),
-          require('@/components/Detail/img/tshirt3.jpg'),
-          require('@/components/Detail/img/tshirt4.jpg'),
-          require('@/components/Detail/img/tshirt5.jpg')
-        ],
-        info: {
-          title: 'Lilbetter男士短袖 时尚圆领印花体恤简约宽松上衣帅气半袖T恤男',
-          subtitle: '领券满199减10 299减20',
-          price: '99',
-          promoPrice: '89',
-          active: '满9.9元,包邮',
-          sort: {
-            size: ['165/S', '170/M', '175/L'],
-            color: ['白色', '黑色']
-          }
-        },
-        shopid: 'lilbetter',
-        itemid: 0
-      }, {
-        imgList: [
-          require('@/components/Detail/img/mi1.jpg'),
-          require('@/components/Detail/img/mi2.jpg'),
-          require('@/components/Detail/img/mi3.jpg'),
-          require('@/components/Detail/img/mi4.jpg'),
-          require('@/components/Detail/img/mi5.jpg')
-        ],
-        info: {
-          title: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
-          subtitle: '双向快充 双USB输出',
-          price: '89',
-          promoPrice: '79',
-          active: '满150元,包邮',
-          sort: {
-            color: ['白色', '黑色']
-          }
-        },
-        shopid: 'xiaomi',
-        itemid: 0
-      }]
+      details: {},
+      imgList: [],
+      info: {
+        title: '',
+        subtitle: '',
+        price: 0,
+        promoPrice: 0,
+        active: '',
+        sort: {
+          size: [],
+          color: []
+        }
+      },
+      shopid: '',
+      gid: ''
     }
   },
   methods: {
-    setItem: function (params) {
-      let { id } = params
-      if (id > this.infoList.length - 1) {
-        id = 0
-      }
-      this.item = this.infoList[id]
+    getDetail: function (id) {
+      request({ url: `/api/detail/${id}` })
+        .then(result => {
+          let { success, imgList, info, shopid, gid } = result
+          if (success) {
+            this.imgList = imgList
+            this.info = info
+            this.shopid = shopid
+            this.gid = gid
+            console.log(shopid)
+          } else {
+            this.$router.push('/home')
+          }
+        })
     }
   },
   watch: {
     '$route.params' (newParams) {
-      this.setItem(newParams)
+      let { id } = newParams
+      this.getDetail(id)
     }
   },
   components: {

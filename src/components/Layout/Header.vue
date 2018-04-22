@@ -29,14 +29,17 @@
           </li>
           <li><span>消息</span></li>
           <li><span>手机逛淘宝</span></li>
-          <li><span @click="loop('/login')">退出</span></li>
+          <li><router-link to="login">退出</router-link></li>
         </ul>
         <ul class="nav_right">
+          <li>
+            <router-link to="home">首页</router-link>
+          </li>
           <li>
             <span>我的淘宝</span>
           </li>
           <li>
-            <span @click="loop('/cart')">购物车</span>
+            <router-link to="/cart">购物车</router-link>
           </li>
           <li>
             <span>收藏夹</span>
@@ -83,6 +86,9 @@
       border-style: solid;
 
       span:hover {
+        color: #f40;
+      }
+      a:hover {
         color: #f40;
       }
     }
@@ -174,9 +180,6 @@ export default {
     blur: function (e) {
       let key = e.target.getAttribute('data-key')
       this[key] = false
-    },
-    loop: function (router = '/') {
-      this.$router.push(router)
     }
   }
 }

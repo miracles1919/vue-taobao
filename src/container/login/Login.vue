@@ -13,22 +13,28 @@
             <label>
               <i class="iconfont">&#xe64d;</i>
             </label>
-            <input type="text" placeholder="请输入手机号"/>
+            <input type="text" placeholder="请输入手机号" v-model="phone"/>
           </div>
           <div class="input_box">
             <label>
               <i class="iconfont">&#xe69f;</i>
             </label>
-            <input type="text" placeholder="请输入密码"/>
+            <input type="password" placeholder="请输入密码" v-model="pwd"/>
           </div>
-          <button class="btn" @click="loop">登录</button>
+          <div class="input_box" v-if="type===1">
+            <label>
+              <i class="iconfont">&#xe69f;</i>
+            </label>
+            <input type="text" placeholder="请确认密码" v-model="confirmPwd"/>
+          </div>
+          <button class="btn" @click="btnClick">{{ type===0 ? '登录' : '确定' }}</button>
           <div class="other_login">
             <span>支付宝登录</span>
             <span>微博登录</span>
           </div>
           <div class="foot">
-            <span>忘记密码</span>
-            <span>免费注册</span>
+            <!-- <span>忘记密码</span> -->
+            <span @click="change($event)">{{ type===0 ? '免费注册' : '返回登录' }}</span>
           </div>
         </div>
       </div>
@@ -165,11 +171,67 @@
 </style>
 
 <script>
+import request from '@/utils/request'
 export default {
   name: 'Login',
+  data () {
+    return {
+      // 0 登陆, 1注册
+      type: 0,
+      phone: null,
+      pwd: null,
+      confirmPwd: null
+    }
+  },
   methods: {
-    loop: function () {
-      this.$router.push('/home')
+    isPhone: function (phone) {
+      return /^1\d{10}$/gi.test(phone)
+    },
+    login: function () {
+      if (this.isPhone(this.phone) && this.pwd) {
+        request({
+          url: '/api/login',
+          method: 'post',
+          data: { account: this.phone, password: this.pwd }
+        })
+          .then(result => {
+            let { success, uid } = result
+            if (success) {
+              localStorage.setItem('uid', uid)
+              this.$router.push('home')
+            }
+          })
+      }
+    },
+    register: function () {
+      if (this.isPhone(this.phone) && this.pwd && this.pwd === this.confirmPwd) {
+        request({
+          url: '/api/register',
+          method: 'post',
+          data: { account: this.phone, password: this.pwd }
+        })
+          .then(result => {
+            let { success, uid } = result
+            if (success) {
+              localStorage.setItem('uid', uid)
+              this.$router.push('home')
+            }
+          })
+      }
+    },
+    btnClick: function () {
+      if (this.type === 0) {
+        this.login()
+      } else {
+        this.register()
+      }
+    },
+    change: function (e) {
+      let str2type = {
+        免费注册: 1,
+        返回登录: 0
+      }
+      this.type = str2type[e.currentTarget.innerHTML]
     }
   }
 }

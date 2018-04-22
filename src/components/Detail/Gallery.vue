@@ -14,7 +14,7 @@
     width: 460px;
 
     .main {
-      width: 420px;
+      // width: 420px;
       height: 420px;
       margin: 20px auto 0;
       display: block;
