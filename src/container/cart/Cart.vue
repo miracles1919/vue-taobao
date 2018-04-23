@@ -341,6 +341,7 @@
 import Header from '@/components/Layout/Header'
 import Checkbox from '@/components/Checkbox/Checkbox'
 import CartItem from './CartItem'
+import request from '@/utils/request'
 
 export default {
   name: 'Cart',
@@ -348,57 +349,36 @@ export default {
     return {
       switchIndex: 0,
       switchList: [
-        { title: '全部商品', num: 30 },
-        { title: '降价商品', num: 3 },
+        { title: '全部商品', num: 0 },
+        { title: '降价商品', num: 0 },
         { title: '库存紧张', num: 0 }
       ],
       switchLine: 0,
-      cartList: [{
-        shop: '小米官方旗舰店1',
-        shopid: 'xm',
-        check: false,
-        itemList: [{
-          id: 'xm-0',
-          img: require('./img/mi.jpg'),
-          basic: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
-          info: {
-            颜色: '黑色'
-          },
-          price: '79.00',
-          num: 1,
-          check: false
-        }, {
-          id: 'xm-1',
-          img: require('./img/mi.jpg'),
-          basic: 'xiaomi小米官方旗舰店移动电源2 10000充电宝超薄便携大容量金属',
-          info: {
-            颜色: '白色'
-          },
-          price: '69.00',
-          num: 2,
-          check: false
-        }]
-      }, {
-        shop: 'NOTHOME',
-        shopid: 'nh',
-        check: false,
-        itemList: [{
-          id: 'nh-0',
-          img: require('./img/mi.jpg'),
-          basic: 'NOTHOMME日系潮牌复古做旧拼接撞色工装夹克男款翻领外套ifashion',
-          info: {
-            颜色: '白色',
-            尺码: 'S'
-          },
-          price: '88.00',
-          num: 1,
-          check: false
-        }]
-      }],
+      cartList: [],
       total: 0,
       selected: 0,
       all: false
     }
+  },
+  mounted: function () {
+    let uid = localStorage.getItem('uid')
+    request({
+      url: `/api/cartList/${uid}`
+    }).then(({ success, cartList }) => {
+      if (success) {
+        let allNum = 0
+        cartList.forEach((shop, index) => {
+          shop.check = false
+          let { itemList } = shop
+          itemList.forEach(item => {
+            item.check = false
+            allNum++
+          })
+        })
+        this.cartList = cartList
+        this.switchList[0].num = allNum
+      }
+    })
   },
   methods: {
     switchHover: function (index) {
@@ -417,8 +397,7 @@ export default {
       this.cartList.forEach((cart, cindex) => {
         let { itemList } = cart
         itemList.forEach((item, index) => {
-          if (item.id === key) {
-            console.log(check)
+          if (`${item.gid}-${index}` === key) {
             this.cartList[cindex].itemList[index].check = check
           }
           if (item.check) {

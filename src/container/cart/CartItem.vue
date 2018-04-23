@@ -7,15 +7,15 @@
       店铺：
       <span class="shop">{{shop}}</span>
     </div>
-    <div class="content" v-for="(item, index) in itemList" :key="item.id" :style="index === 0 ? 'border-top:1px solid #ccc' : ''">
+    <div class="content" v-for="(item, index) in itemList" :key="`${item.gid}-${index}`" :style="index === 0 ? 'border-top:1px solid #ccc' : ''">
       <ul>
         <li class="td_chk">
-          <checkbox wrapStyle="text-align: right;padding-right: 15px" @onChange="check" :ckey="`${item.id}`" :isCheck="item.check"/>
+          <checkbox wrapStyle="text-align: right;padding-right: 15px" @onChange="check" :ckey="`${item.gid}-${index}`" :isCheck="item.check"/>
         </li>
         <li class="td_item">
           <img :src="item.img" />
           <div class="info">
-            <div class="basic">{{item.basic}}</div>
+            <div class="basic">{{item.title}}</div>
             <div class="icons">
               <img src="./img/card.png" />
               <img src="./img/7.png" />
@@ -24,7 +24,7 @@
           </div>
         </li>
         <li class="td_info">
-          <p class="line" v-for="(item, index) in infoList" :key="index">{{item[0]}}：{{item[1]}}</p>
+          <p class="line" v-for="(item, index) in dealSelect(item.select)" :key="index">{{item[0]}}：{{item[1]}}</p>
         </li>
         <li class="td_price">
           <div><em>{{item.price}}</em></div>
@@ -206,15 +206,9 @@ export default {
   props: ['data', 'index'],
   data () {
     return {
-      shop: '',
-      itemList: [],
-      infoList: []
+      shop: this.data.shop,
+      itemList: this.data.itemList
     }
-  },
-  created: function () {
-    let { shop, itemList } = this.data
-    this.itemList = itemList
-    this.shop = shop
   },
   methods: {
     add: function (index) {
@@ -228,10 +222,20 @@ export default {
       }
     },
     check: function (isCheck, key) {
+      // console.log(key)
       this.$emit('onCheck', key, isCheck)
     },
     allCheck: function (isCheck, key) {
       this.$emit('shopCheck', key, isCheck)
+    },
+    dealSelect: function (select) {
+      const str2cn = {
+        color: '颜色',
+        size: '尺码'
+      }
+      return Object.entries(select).map(entry => {
+        return [str2cn[entry[0]], entry[1]]
+      })
     }
   },
   components: {
