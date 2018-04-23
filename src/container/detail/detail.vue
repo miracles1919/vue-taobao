@@ -56,7 +56,6 @@ export default {
             this.info = info
             this.shopid = shopid
             this.gid = gid
-            console.log(shopid)
           } else {
             this.$router.push('/home')
           }

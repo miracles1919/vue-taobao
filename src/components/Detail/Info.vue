@@ -249,6 +249,7 @@
 </style>
 
 <script>
+import request from '@/utils/request'
 export default {
   name: 'DetailInfo',
   props: ['title', 'subtitle', 'price', 'promoPrice', 'active', 'sort', 'shopid', 'gid'],
@@ -304,7 +305,9 @@ export default {
       let gid = this.gid
       if (Object.keys(this.sort).length === Object.keys(select).length) {
         console.log({ ...select, account, shopid, gid })
-        this.$router.push('/order')
+        let data = { ...select, account, shopid, gid }
+        console.log(data)
+        // this.$router.push('/order')
       }
     },
     addCart: function () {
@@ -313,8 +316,13 @@ export default {
       let shopid = this.shopid
       let gid = this.gid
       if (Object.keys(this.sort).length === Object.keys(select).length) {
-        console.log({ ...select, account, shopid, gid })
-        this.$router.push('/cart')
+        let uid = parseInt(localStorage.getItem('uid'))
+        let data = { select, account, shopid, gid, uid }
+        request({ url: '/api/addCart', method: 'post', data })
+          .then(reslut => {
+            console.log(reslut)
+          })
+        // this.$router.push('/cart')
       }
     }
   },
