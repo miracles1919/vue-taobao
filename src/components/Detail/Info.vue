@@ -299,15 +299,9 @@ export default {
       }
     },
     buy: function () {
-      let select = this.select
-      let account = this.account
-      let shopid = this.shopid
-      let gid = this.gid
-      if (Object.keys(this.sort).length === Object.keys(select).length) {
-        console.log({ ...select, account, shopid, gid })
-        let data = { ...select, account, shopid, gid }
-        console.log(data)
-        // this.$router.push('/order')
+      if (Object.keys(this.sort).length === Object.keys(this.select).length) {
+        this.$emit('changeAccount', this.account)
+        this.$emit('buy')
       }
     },
     addCart: function () {
@@ -319,8 +313,12 @@ export default {
         let uid = parseInt(localStorage.getItem('uid'))
         let data = { select, account, shopid, gid, uid }
         request({ url: '/api/addCart', method: 'post', data })
-          .then(reslut => {
-            console.log(reslut)
+          .then(({ success }) => {
+            if (success) {
+              alert('已加入购物车')
+              this.account = 1
+              Object.keys(this.sortIndex).forEach(key => { this.sortIndex[key] = -1 })
+            }
           })
         // this.$router.push('/cart')
       }

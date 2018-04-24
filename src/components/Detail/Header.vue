@@ -4,7 +4,7 @@
       <img class="icon" src="../Layout/img/tmall.png" />
       <div class="shop">
         <div class="slogo">
-          <strong>libetter旗舰店</strong>
+          <strong>{{shop}}</strong>
           <div class="extraicon">
             <span><span>品牌直销</span></span>
             <i class="wang" />
@@ -162,6 +162,7 @@
 <script>
 export default {
   name: 'DetailHeader',
+  props: ['shop'],
   data () {
     return {
       infoList: ['描 述', '物 流', '服 务']

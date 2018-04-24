@@ -41,7 +41,7 @@
         </li>
         <li class="td_op">
           <span>移入收藏夹</span>
-          <span>删除</span>
+          <span @click="del(item, index)">删除</span>
         </li>
       </ul>
     </div>
@@ -108,6 +108,7 @@
           justify-content: space-between;
           .basic {
             min-height: 40px;
+            cursor: pointer;
           }
           .icons {
             height: 24px;
@@ -236,6 +237,9 @@ export default {
       return Object.entries(select).map(entry => {
         return [str2cn[entry[0]], entry[1]]
       })
+    },
+    del: function ({ gid, select }, index) {
+      this.$emit('del', gid, select, index)
     }
   },
   components: {

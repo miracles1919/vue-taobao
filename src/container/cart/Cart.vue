@@ -37,7 +37,15 @@
           <div class="sum">金额</div>
           <div class="op">操作</div>
         </div>
-        <cart-item v-for="(item, index) in cartList" :key="`cart${index}`" :data="item" :index="index" @onCheck="onCheck" @update="update" @shopCheck="shopCheck"/>
+        <cart-item
+          v-for="(item, index) in cartList"
+          :key="`cart${index}`"
+          :data="item" :index="index"
+          @onCheck="onCheck"
+          @update="update"
+          @shopCheck="shopCheck"
+          @del="del"
+        />
         <div class="foot_bar">
           <div class="left">
             <div class="all"><checkbox wrapStyle="marginRight: 5px" :isCheck="all" @onChange="allCheck"/>全选</div>
@@ -61,7 +69,7 @@
                 <em><span>&nbsp;</span>{{ total }}</em>
               </strong>
             </div>
-            <button :class="['btn', total > 0 ? 'buy' : '']">结&nbsp;算</button>
+            <button :class="['btn', total > 0 ? 'buy' : '']" @click="buy">结&nbsp;算</button>
           </div>
         </div>
       </div>
@@ -463,6 +471,35 @@ export default {
       })
       this.total = total
       this.selected = selected
+    },
+    buy: function () {
+      if (this.total > 0) {
+        let checkList = []
+        this.cartList.forEach(shop => {
+          if (shop.check) {
+            checkList.push(shop)
+          } else {
+            let itemList = shop.itemList.filter(item => item.check)
+            if (itemList.length > 0) {
+              checkList.push({ shop: shop.shop, shopid: shop.shopid, itemList })
+            }
+          }
+        })
+        localStorage.setItem('checkList', JSON.stringify(checkList))
+        this.$router.push('/order')
+      }
+    },
+    del: function (gid, select, index) {
+      let uid = localStorage.getItem('uid')
+      request({ url: '/api/delCart', method: 'post', data: { uid, gid, select } })
+        .then(({ success }) => {
+          if (success) {
+            let filterList = this.cartList.filter(({itemList}) => {
+              return itemList.some(item => item.gid === gid)
+            })
+            filterList[0].itemList.splice(index, 1)
+          }
+        })
     }
   },
   components: {
