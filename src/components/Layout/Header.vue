@@ -12,13 +12,17 @@
             </div>
           </li>
           <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="userShow ? navHover : ''" data-key="userShow">
-            <span>遮不住的时光</span>
+            <span>xuxiaoli1995</span>
             <div v-show="userShow" class="menu">
               <div class="user_menu">
                 <div style="display: flex">
                   <img class="avatar" src="./img/avatar.jpeg"/>
                   <div class="info">
-                    <p><span style="margin-right: 10px">账号管理</span>|<span style="margin-left: 10px">退出</span></p>
+                    <p>
+                      <router-link to="/member"><span style="margin-right: 10px">账号管理</span></router-link>
+                      |
+                      <router-link to="/login"><span style="margin-left: 10px">退出</span></router-link>
+                    </p>
                     <p>淘气值：627</p>
                     <p>普通会员</p>
                   </div>
@@ -33,10 +37,10 @@
         </ul>
         <ul class="nav_right">
           <li>
-            <router-link to="home">首页</router-link>
+            <router-link to="/home">首页</router-link>
           </li>
           <li>
-            <span>我的淘宝</span>
+            <router-link to="/member">我的淘宝</router-link>
           </li>
           <li>
             <router-link to="/cart">购物车</router-link>

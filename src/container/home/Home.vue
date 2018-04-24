@@ -13,10 +13,10 @@
           </div>
           <div class="search_fields">
             <div class="search">
-              <input />
+              <input v-model="keywords" @keyup.enter="search"/>
             </div>
             <div class="button">
-              <button>搜索</button>
+              <button @click="search">搜索</button>
             </div>
           </div>
         </div>
@@ -743,7 +743,8 @@ export default {
         {name: '演出', position: '-396'},
         {name: '水电煤', position: '-440'},
         {name: '火车票', position: '-484'}
-      ]
+      ],
+      keywords: ''
     }
   },
   methods: {
@@ -774,7 +775,17 @@ export default {
           this.noticeIndex = index
         }, 200)
       }
-    })()
+    })(),
+    search: function () {
+      if (this.keywords) {
+        let keywords = this.keywords.trim().toLocaleLowerCase()
+        if (keywords.indexOf('小米') !== -1) {
+          this.$router.push('/detail/xiaomi-1')
+        } else if (keywords.indexOf('t恤') !== -1) {
+          this.$router.push('/detail/lilbetter-1')
+        }
+      }
+    }
   },
   components: {
     Header,

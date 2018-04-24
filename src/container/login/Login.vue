@@ -25,7 +25,7 @@
             <label>
               <i class="iconfont">&#xe69f;</i>
             </label>
-            <input type="text" placeholder="请确认密码" v-model="confirmPwd"/>
+            <input type="password" placeholder="请确认密码" v-model="confirmPwd"/>
           </div>
           <button class="btn" @click="btnClick">{{ type===0 ? '登录' : '确定' }}</button>
           <div class="other_login">
