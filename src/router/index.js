@@ -7,6 +7,7 @@ import Cart from '@/container/cart/Cart'
 import Detail from '@/container/detail/Detail'
 import Member from '@/container/member/Member'
 import Order from '@/container/order/order'
+import Pay from '@/container/pay/pay'
 
 Vue.use(Router)
 
@@ -35,6 +36,10 @@ export default new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/pay',
+      component: Pay
     }
   ]
 })
