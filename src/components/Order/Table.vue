@@ -9,29 +9,28 @@
       <div class="td">优惠方式</div>
       <div class="td">小计</div>
     </div>
-    <div class="info">
-      <p class="shop">店铺: 阿茶与阿古</p>
-      <div class="item">
+    <div class="info" v-for="shop in shopList" :key="shop.shopid">
+      <p class="shop">店铺: {{shop.shop}}</p>
+      <div class="item" v-for="item in shop.itemList" :key="item.gid">
         <div class="detail">
-          <img src="./img/mi.jpg"/>
+          <img :src="item.img"/>
           <div>
-            <p class="title">阿茶与阿古2018春装新款搭配款拼条复古翻边韩风休闲小脚裤</p>
-            <span class="delivery">发货时间：卖家承诺15天</span>
+            <p class="title">{{item.title}}</p>
+            <span class="delivery">发货时间：卖家承诺7天内</span>
           </div>
         </div>
         <div class="sku">
-          <p>颜色：浅灰色</p>
-          <p>尺码：S</p>
+          <p v-for="(list, index) in getSort(item.select)" :key="index">{{`${list[0]}：${list[1]}`}}</p>
         </div>
-        <div class="price">165.00</div>
-        <div class="number">1</div>
+        <div class="price">{{item.price.toFixed(2)}}</div>
+        <div class="number">{{item.num}}</div>
         <div class="promotion">无优惠</div>
-        <div class="simple-price">165.00</div>
+        <div class="simple-price">{{(item.price * item.num).toFixed(2)}}</div>
       </div>
     </div>
     <div class="orderPay">
       <span>店铺合计(含运费)</span>
-      <span class="price"><span>￥</span><em>165</em></span>
+      <span class="price"><span>￥</span><em>{{sum}}</em></span>
     </div>
   </div>
 </template>
@@ -162,6 +161,18 @@
 
 <script>
 export default {
-  name: 'Table'
+  name: 'Table',
+  props: ['shopList', 'sum'],
+  methods: {
+    getSort: function (select) {
+      let str2cn = {
+        size: '尺码',
+        color: '颜色'
+      }
+      return Object.entries(select).map(([key, value]) => {
+        return [str2cn[key], value]
+      })
+    }
+  }
 }
 </script>

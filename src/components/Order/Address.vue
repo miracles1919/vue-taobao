@@ -5,13 +5,13 @@
       <span>管理收货地址</span>
     </h3>
     <ul class="list">
-      <li v-for="(item, index) in list" :class="selectIndex === index ? 'selected' : ''" @click="onCheck(index)" :key="index">
-        <div class="tip" v-if="selectIndex === index">
+      <li v-for="(item, n) in list" :class="index === n ? 'selected' : ''" @click="onCheck(n)" :key="n">
+        <div class="tip" v-if="index === n">
           <i class="iconfont">&#xe617;</i>
           <span>寄送至</span>
         </div>
-        <Checkbox :isCheck="selectIndex === index"/>
-        <span class="txt">{{item.address}}</span>
+        <Checkbox :isCheck="index === n"/>
+        <span class="txt">{{`${item.address}&nbsp;&nbsp;(${item.name} 收)&nbsp;&nbsp;`}}</span>
         <em>{{item.phone}}</em>
       </li>
     </ul>
@@ -92,21 +92,14 @@
 import Checkbox from '@/components/Checkbox/Checkbox'
 export default {
   name: 'Address',
-  data () {
-    return {
-      selectIndex: 0,
-      list: [{
-        address: '浙江省 宁波市 江北区 慈城镇 慈湖人家86幢226号106室（曹莹 收）',
-        phone: '15715848670'
-      }, {
-        address: '浙江省 杭州市 余杭区 仓前街道 文一西路海创科技中心4幢3楼蕃蕃数据（鲁杰 收) ',
-        phone: '15726940632'
-      }]
-    }
-  },
+  props: ['list', 'index'],
   methods: {
     onCheck: function (index) {
-      this.selectIndex = index
+      if (index !== this.index) {
+        this.$emit('onCheck', index)
+      } else {
+        this.$emit('onCheck', -1)
+      }
     }
   },
   components: {

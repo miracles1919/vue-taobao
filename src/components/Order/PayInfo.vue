@@ -5,23 +5,23 @@
         <div class="realPay">
           <span class="title">实付款：</span>
           <span class="icon">￥</span>
-          <span class="price">165.00</span>
+          <span class="price">{{sum}}</span>
         </div>
         <div class="confirmAddr">
           <div>
             <span class="title">寄送至：</span>
-            <span>浙江省 杭州市 余杭区 五常街道 西溪北苑北区73幢1102</span>
+            <span>{{data.address}}</span>
           </div>
           <div>
             <span class="title">收货人：</span>
-            <span>鲁杰 15726940632</span>
+            <span>{{`${data.name}&nbsp;${data.phone}`}}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="submitWrapper">
-      <router-link to="cart"><span class="return"><i class="iconfont">&#xe60c;</i>返回购物车</span></router-link>
-      <button class="submit">提交订单</button>
+      <span class="return"  @click="clear"><i class="iconfont">&#xe60c;</i>返回购物车</span>
+      <button class="submit" @click="submit">提交订单</button>
     </div>
   </div>
 </template>
@@ -81,6 +81,7 @@
         text-decoration: none;
         margin-right: 50px;
         line-height: 34px;
+        cursor: pointer;
         .iconfont {
           color: #36c;
         }
@@ -91,6 +92,16 @@
 
 <script>
 export default {
-  name: 'PayInfo'
+  name: 'PayInfo',
+  props: ['sum', 'data'],
+  methods: {
+    clear: function () {
+      localStorage.setItem('checkList', [])
+      this.$router.push('/cart')
+    },
+    submit: function () {
+      this.$emit('submit')
+    }
+  }
 }
 </script>
