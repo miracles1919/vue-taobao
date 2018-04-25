@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   name: 'Pay',
   data () {
@@ -35,13 +36,35 @@ export default {
     pay: function () {
       if (this.password === '123456') {
         let checkList = JSON.parse(localStorage.getItem('checkList'))
-        console.log(checkList)
+        let uid = localStorage.getItem('uid')
+        if (checkList.length > 0) {
+          let payList = []
+
+          checkList.forEach(({ itemList }) => {
+            itemList.forEach(({ gid, select }) => {
+              payList.push({ gid, select, uid })
+            })
+          })
+
+          request({
+            url: '/api/pay',
+            method: 'post',
+            data: { payList }
+          })
+            .then(({ success }) => {
+              if (success) {
+                alert('支付成功')
+                localStorage.setItem('checkList', '')
+                this.$router.push('/cart')
+              }
+            })
+        }
       } else {
         alert('支付密码错误')
       }
     },
     cancel: function () {
-      localStorage.setItem('checkList', [])
+      localStorage.setItem('checkList', '')
       this.$router.push('/cart')
     }
   }
