@@ -93,10 +93,11 @@
             <div class="member">
               <div class="member_bd">
                 <div class="avatar_wrapper">
-                  <img src="./img/avatar.jpeg"/>
+                  <img v-if="isLogin" src="./img/avatar.jpg"/>
+                  <img v-else src="./img/default.png">
                 </div>
                 <p class="nick_info">
-                  Hi!<strong>遮不住的时光</strong>
+                  Hi!<strong>{{ isLogin ? 'xuxiaoli1995' : '你好'}}</strong>
                 </p>
                 <p class="nick_info">
                   <span><i class="tbh_icon"/>领淘金币抵钱</span>
@@ -744,7 +745,16 @@ export default {
         {name: '水电煤', position: '-440'},
         {name: '火车票', position: '-484'}
       ],
-      keywords: ''
+      keywords: '',
+      isLogin: false
+    }
+  },
+  mounted: function () {
+    let uid = localStorage.getItem('uid')
+    if (uid) {
+      this.isLogin = true
+    } else {
+      this.isLogin = false
     }
   },
   methods: {

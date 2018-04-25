@@ -11,17 +11,23 @@
               </ul>
             </div>
           </li>
-          <li v-on:mouseenter="hover" v-on:mouseleave="blur" v-bind:class="userShow ? navHover : ''" data-key="userShow">
+          <li v-if="!isLogin"><router-link to="/login" style="color:#f22e00">亲，请登陆</router-link></li>
+          <li
+            v-on:mouseenter="hover"
+            v-on:mouseleave="blur"
+            v-bind:class="userShow ? navHover : ''" data-key="userShow"
+            v-if="isLogin"
+          >
             <span>xuxiaoli1995</span>
             <div v-show="userShow" class="menu">
               <div class="user_menu">
                 <div style="display: flex">
-                  <img class="avatar" src="./img/avatar.jpeg"/>
+                  <img class="avatar" src="./img/avatar.jpg"/>
                   <div class="info">
                     <p>
                       <router-link to="/member"><span style="margin-right: 10px">账号管理</span></router-link>
                       |
-                      <router-link to="/login"><span style="margin-left: 10px">退出</span></router-link>
+                      <span style="margin-left: 10px" @click="logout">退出</span>
                     </p>
                     <p>淘气值：627</p>
                     <p>普通会员</p>
@@ -33,7 +39,7 @@
           </li>
           <li><span>消息</span></li>
           <li><span>手机逛淘宝</span></li>
-          <li><router-link to="login">退出</router-link></li>
+          <li v-if="isLogin"><span @click="logout">退出</span></li>
         </ul>
         <ul class="nav_right">
           <li>
@@ -171,10 +177,17 @@ export default {
       areaShow: false,
       userShow: false,
       areaList: ['全球', '中国大陆', '香港', '台湾', '澳门', '日本'],
-      navHover: 'nav_hover'
+      navHover: 'nav_hover',
+      isLogin: false
     }
   },
   mounted: function () {
+    let uid = localStorage.getItem('uid')
+    if (uid) {
+      this.isLogin = true
+    } else {
+      this.isLogin = false
+    }
   },
   methods: {
     hover: function (e) {
@@ -184,6 +197,10 @@ export default {
     blur: function (e) {
       let key = e.target.getAttribute('data-key')
       this[key] = false
+    },
+    logout: function (params) {
+      localStorage.setItem('uid', '')
+      this.$router.push('/login')
     }
   }
 }
