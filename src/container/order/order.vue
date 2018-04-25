@@ -31,6 +31,7 @@ import StepBar from '@/components/Order/Bar'
 import Address from '@/components/Order/Address'
 import Table from '@/components/Order/Table'
 import PayInfo from '@/components/Order/PayInfo'
+import request from '@/utils/request'
 
 export default {
   name: 'order',
@@ -59,6 +60,16 @@ export default {
       })
     })
     this.sum = sum
+
+    let uid = localStorage.getItem('uid')
+    request({
+      url: `/api/user/${uid}`
+    })
+      .then(({ success, addressList }) => {
+        if (success) {
+          this.addressList = addressList
+        }
+      })
   },
   methods: {
     addressCheck: function (index) {

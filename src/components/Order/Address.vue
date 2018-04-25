@@ -11,7 +11,7 @@
           <span>寄送至</span>
         </div>
         <Checkbox :isCheck="index === n"/>
-        <span class="txt">{{`${item.address}&nbsp;&nbsp;(${item.name} 收)&nbsp;&nbsp;`}}</span>
+        <span class="txt">{{`${`${item.location} ${item.address}`}&nbsp;&nbsp;(${item.name} 收)&nbsp;&nbsp;`}}</span>
         <em>{{item.phone}}</em>
       </li>
     </ul>
