@@ -789,10 +789,12 @@ export default {
     search: function () {
       if (this.keywords) {
         let keywords = this.keywords.trim().toLocaleLowerCase()
-        if (keywords.indexOf('小米') !== -1) {
+        if (keywords.indexOf('小米') !== -1 || keywords.indexOf('xiaomi') !== -1) {
           this.$router.push('/detail/xiaomi-1')
         } else if (keywords.indexOf('t恤') !== -1) {
           this.$router.push('/detail/lilbetter-1')
+        } else {
+          alert('该商品不存在')
         }
       }
     }

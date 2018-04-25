@@ -24,23 +24,29 @@
           </div>
           <div :class="['item']">
             <span>所在地区 <i>*</i></span>
-            <div class="address-menu"></div>
+            <input class="address-menu" v-model="location"/>
+            <!-- <div class="address-menu"></div> -->
           </div>
           <div :class="['item']">
             <span>详细地址 <i>*</i></span>
-            <textarea placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息" />
+            <textarea placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息" v-model="address"/>
           </div>
           <div :class="['item']">
             <span>收货人姓名 <i>*</i></span>
-            <input placeholder="长度不超过25个字符" />
+            <input placeholder="长度不超过25个字符" v-model="name"/>
           </div>
           <div :class="['item']">
             <span>手机号码 <i>*</i></span>
-            <input placeholder="必填" />
+            <input placeholder="必填" v-model="phone"/>
           </div>
         </div>
-        <button class="btn">保 存</button>
-        <div class="table"><Table /></div>
+        <button class="btn" @click="save">保 存</button>
+        <div class="table">
+          <Table
+            :data="list"
+            @del="del"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -134,10 +140,9 @@
         .address-menu {
           border: 1px solid #ccc;
           font-size: 12px;
-          padding: 4px 8px;
+          padding: 4px 3px;
           outline: 0;
           position: relative;
-          cursor: pointer;
           width: 300px;
         }
 
@@ -187,10 +192,68 @@
 </style>
 
 <script>
-import MtHeader from '@/components/Layout/MtHeader'
-import Table from '@/components/Table/Table'
+import MtHeader from '@/components/Member/Header'
+import Table from '@/components/Member/Table'
+import request from '@/utils/request'
 export default {
   name: 'member',
+  data () {
+    return {
+      name: '',
+      phone: '',
+      location: '',
+      address: '',
+      list: []
+    }
+  },
+  mounted: function () {
+    let uid = localStorage.getItem('uid')
+    request({
+      url: `/api/user/${uid}`
+    })
+      .then(({ success, addressList }) => {
+        if (success) {
+          this.list = addressList
+        }
+      })
+  },
+  methods: {
+    save: function () {
+      let { name, phone, location, address } = this
+      let uid = localStorage.getItem('uid')
+      if (name && phone && location && address) {
+        let data = { uid, name, phone, location, address }
+        request({
+          url: '/api/addAddress',
+          method: 'post',
+          data
+        })
+          .then(({ success, message }) => {
+            if (success) {
+              alert(message)
+              this.list.push(data)
+              Object.keys(data).forEach(item => { this[item] = '' })
+            }
+          })
+      } else {
+        alert('请完善信息')
+      }
+    },
+    del: function (index) {
+      let uid = localStorage.getItem('uid')
+      request({
+        url: '/api/delAddress',
+        method: 'post',
+        data: { uid, index }
+      })
+        .then(({ success }) => {
+          if (success) {
+            alert('删除成功')
+            this.list.splice(index, 1)
+          }
+        })
+    }
+  },
   components: {
     MtHeader,
     Table
