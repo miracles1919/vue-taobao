@@ -504,7 +504,7 @@
                 left: 0;
                 height: 16px;
                 width: 16px;
-                vertical-align: middle;
+                // vertical-align: middle;
               }
               span:first-child {
                 .tbh_icon {

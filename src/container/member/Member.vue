@@ -40,7 +40,11 @@
             <input placeholder="必填" v-model="phone"/>
           </div>
         </div>
-        <button class="btn" @click="save">保 存</button>
+        <button class="btn" @click="save" v-if="type === 0">保 存</button>
+        <div v-else-if="type === 1">
+          <button class="btn">修 改</button>
+          <button :class="['btn', 'cancel']">取 消</button>
+        </div>
         <div class="table">
           <Table
             :data="list"
@@ -181,6 +185,9 @@
         margin-left: 105px;
         margin-top: 20px;
       }
+      .cancel {
+        background-color: #e8e8e8;
+      }
       .table {
         border: 1px solid #e8e8e8;
         border-bottom: 0;
@@ -203,7 +210,9 @@ export default {
       phone: '',
       location: '',
       address: '',
-      list: []
+      list: [],
+      // 0: 添加, 1: 修改
+      type: 0
     }
   },
   mounted: function () {
@@ -252,7 +261,13 @@ export default {
             this.list.splice(index, 1)
           }
         })
+    },
+    mod: function (index) {
+
     }
+    // changeType: function () {
+
+    // }
   },
   components: {
     MtHeader,

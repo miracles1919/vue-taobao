@@ -2,6 +2,8 @@
 
 > 采用vue-cli脚手架，仿照淘宝的项目（目前只实现了一小部分..）
 
+> [已部署到阿里云](http://47.98.152.90:3001/#/home)
+
 > [后端地址](https://github.com/miracles1919/node-taobao)
 
 
@@ -58,3 +60,5 @@ npm i
 # 开启本地服务器localhost:8088
 npm run dev
 ```
+
+###
