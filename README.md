@@ -61,4 +61,60 @@ npm i
 npm run dev
 ```
 
-###
+### 跨域方案
+1、CORS（推荐）全称 Cross-origin resource sharing
+
+最简单的配置就是服务端设置响应头 Access-Control-Allow-Origin: `*`，浏览器发起请求的时候，会有一个options的预检，来判断服务器是否接受后续真正的请求
+
+```javascript
+// node express 为例
+app.all('*', (req, res, next) => {
+  // 用于预检请求
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  if(req.method === 'OPTIONS') {
+    console.log('options')
+    res.sendStatus(200)
+  } else {
+    next()
+  }
+})
+```
+
+2、JSONP
+
+原理就是创建一个script标签，将它的src设置成请求的url，然后设置回调函数并将回调函数名作为参数传至服务器
+
+```javascript
+let head = document.getElementsByTagName('head')[0]
+let script = document.createElement('script')
+let callbackName = `jsonp${Math.round(Math.random() * 1000000)}`
+
+url += url.indexOf('?') > 0 ? '' : '?'
+for (let key in data) {
+  url += `${key}=${data[key]}&`
+}
+url += `callback=${callbackName}`
+script.src = url
+
+head.appendChild(script)
+
+window[callbackName] = function (data) {
+  resolve(data)
+  delete window[callbackName]
+}
+
+```
+服务端返回数据的时候，记得要用jsonp格式而不是json，否则会报错`Uncaught SyntaxError: Unexpected token :`
+
+
+### Cookie
+cookie由服务端设置，具体尽情期待...
+```
+// 设置两周的缓存
+res.setHeader('Set-Cookie', `uid=${uid};Max-age=${86400 * 7 * 2};Path=/`)
+```
+
+### 部署
+[👇戳这里，从零部署指南](https://github.com/miracles1919/personal-notes/blob/master/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2.md)

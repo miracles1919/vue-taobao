@@ -10,7 +10,7 @@ import Order from '@/container/order/order'
 import Pay from '@/container/pay/pay'
 
 // 测试请求
-import '../service/demo'
+// import '../service/demo'
 
 Vue.use(Router)
 
