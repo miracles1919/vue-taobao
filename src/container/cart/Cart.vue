@@ -375,6 +375,7 @@ export default {
     }).then(({ success, cartList }) => {
       if (success) {
         let allNum = 0
+        console.log(cartList)
         cartList.forEach((shop, index) => {
           shop.check = false
           let { itemList } = shop
@@ -383,6 +384,7 @@ export default {
             allNum++
           })
         })
+        console.log(cartList)
         this.cartList = cartList
         this.switchList[0].num = allNum
       }

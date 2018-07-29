@@ -194,11 +194,9 @@ export default {
           method: 'post',
           data: { account: this.phone, password: this.pwd }
         })
-          .then(result => {
-            let { success, uid } = result
+          .then(({success}) => {
             if (success) {
-              localStorage.setItem('uid', uid)
-              this.$router.push('home')
+              // this.$router.push('home')
             }
           })
       }
@@ -210,10 +208,8 @@ export default {
           method: 'post',
           data: { account: this.phone, password: this.pwd }
         })
-          .then(result => {
-            let { success, uid } = result
+          .then(({ success }) => {
             if (success) {
-              localStorage.setItem('uid', uid)
               this.$router.push('home')
             }
           })

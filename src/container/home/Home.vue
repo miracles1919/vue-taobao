@@ -750,12 +750,12 @@ export default {
     }
   },
   mounted: function () {
-    let uid = localStorage.getItem('uid')
-    if (uid) {
+    if (document.cookie.includes('uid')) {
       this.isLogin = true
     } else {
       this.isLogin = false
     }
+    console.log(document.cookie.includes('uid'))
   },
   methods: {
     tabClick: function (e) {

@@ -11,7 +11,7 @@
               </ul>
             </div>
           </li>
-          <li v-if="!isLogin"><router-link to="/login" style="color:#f22e00">亲，请登陆</router-link></li>
+          <li v-if="!isLogin"><router-link to="/login" style="color:#f22e00">亲，请登录</router-link></li>
           <li
             v-on:mouseenter="hover"
             v-on:mouseleave="blur"
@@ -182,8 +182,7 @@ export default {
     }
   },
   mounted: function () {
-    let uid = localStorage.getItem('uid')
-    if (uid) {
+    if (document.cookie.includes('uid')) {
       this.isLogin = true
     } else {
       this.isLogin = false

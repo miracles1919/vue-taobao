@@ -4,6 +4,7 @@ const request = ({url, method = 'get', data = {}}) => {
     headers: {
       'Content-Type': 'application/json'
     }
+    // credentials: 'same-origin'
   }
   if (method === 'post') {
     options.body = JSON.stringify(data)

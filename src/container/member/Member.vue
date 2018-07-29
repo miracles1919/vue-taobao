@@ -216,9 +216,8 @@ export default {
     }
   },
   mounted: function () {
-    let uid = localStorage.getItem('uid')
     request({
-      url: `/api/user/${uid}`
+      url: '/api/user'
     })
       .then(({ success, addressList }) => {
         if (success) {
@@ -229,9 +228,8 @@ export default {
   methods: {
     save: function () {
       let { name, phone, location, address } = this
-      let uid = localStorage.getItem('uid')
       if (name && phone && location && address) {
-        let data = { uid, name, phone, location, address }
+        let data = { name, phone, location, address }
         request({
           url: '/api/addAddress',
           method: 'post',
@@ -249,11 +247,10 @@ export default {
       }
     },
     del: function (index) {
-      let uid = localStorage.getItem('uid')
       request({
         url: '/api/delAddress',
         method: 'post',
-        data: { uid, index }
+        data: { index }
       })
         .then(({ success }) => {
           if (success) {
